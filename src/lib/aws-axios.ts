@@ -1,4 +1,3 @@
-// signAndRequest.ts
 import axios, { AxiosPromise } from "axios";
 import { SignatureV4 } from "@aws-sdk/signature-v4";
 import { HttpRequest } from "@aws-sdk/protocol-http";
