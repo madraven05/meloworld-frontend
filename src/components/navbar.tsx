@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <div className="fixed top-5 w-full px-20 z-50">
+    <div className="fixed top-0 w-full z-50">
       {/* Desktop navbar (shown only in lg and md screens) */}
       <div className="bg-primary/5 backdrop-blur-xl w-full rounded-xl p-5 shadow-lg lg:flex md:flex gap-5 hidden">
         {navbarItems.map((item, idx) => (
