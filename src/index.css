@@ -9,11 +9,19 @@
 }
 
 body {
-    @apply bg-secondary font-poppins text-sky-900;
+    @apply bg-secondary font-poppins text-sky-900 font-light;
 }
 
 h1 {
-    @apply text-xl lg:text-3xl font-poppins font-bold;
+    @apply text-2xl lg:text-2xl font-poppins font-bold;
+}
+
+h2 {
+    @apply text-xl lg:text-xl font-poppins font-bold;
+}
+
+h3 {
+    @apply text-lg lg:text-lg font-poppins font-semibold;
 }
 
 a {
@@ -22,4 +30,8 @@ a {
 
 button {
     @apply hover:cursor-pointer;
+}
+
+.glass-container {
+    @apply bg-primary/10 backdrop-blur-2xl rounded-xl p-5;
 }

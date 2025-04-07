@@ -1,0 +1,31 @@
+import { AwsClient } from 'aws4fetch';
+
+const accessKeyId = import.meta.env.VITE_AWS_ACCESS_KEY;
+const secretAccessKey = import.meta.env.VITE_AWS_AUTH_SECRET
+const region = import.meta.env.VITE_AWS_REGION
+const service = import.meta.env.VITE_AWS_ADMIN_HOST
+
+export async function signAndRequest(
+  method: string,
+  hostname: string,
+  path: string,
+  body?: Record<string, unknown>
+) {
+  const url = `https://${hostname}${path}`;
+  const options = {
+    method: method, 
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: body ? JSON.stringify(body) : undefined,
+  };
+
+  const client = new AwsClient({
+    accessKeyId,
+    secretAccessKey,
+    region,
+    service,
+  });
+  
+  return client.fetch(url, options);
+}
