@@ -2,11 +2,10 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import Button from "../ui/button";
 import { IoKey, IoMail, IoPerson } from "react-icons/io5";
 import Input from "../ui/input";
-import { signAndRequest } from "../../lib/aws-axios";
 import { useNavigate } from "react-router-dom";
+import { signup } from "../services/auth";
 
 export type FormState = { [key: string]: { value: string; error: string } };
-const ADMIN_HOST = import.meta.env.VITE_AWS_ADMIN_HOST;
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
@@ -98,7 +97,7 @@ const SignUp: React.FC = () => {
     }
   };
 
-  const handleSignup = (e: FormEvent<HTMLFormElement>) => {
+  const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     let errorFlag = false;
@@ -110,27 +109,18 @@ const SignUp: React.FC = () => {
 
     if (errorFlag) return;
 
-    const payload = {
-      name: formState["name"].value,
-      email: formState["email"].value,
-      password: formState["password"].value,
-    };
+    const response = await signup(
+      formState["name"].value,
+      formState["email"].value,
+      formState["password"].value,
+      "ADMIN"
+    );
 
-    console.log(payload);
-
-    // add post api here
-    signAndRequest(
-      "POST",
-      ADMIN_HOST,
-      "/default/psychometricAdmin/admin?action=register",
-      payload
-    ).then(() => {
-        alert("Signup successful!");
-        navigate("/admin/login");
-      })
-      .catch((err: string) => {
-        alert(err);
-      });
+    if(response.ok) {
+      alert("Signup Successful!")
+      navigate("/admin/login");
+    }
+    
   };
 
   return (
