@@ -1,15 +1,17 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Button from "../ui/button";
 import { IoKey, IoMail } from "react-icons/io5";
 import Input from "../ui/input";
-import { signAndRequest } from "../../lib/aws-axios";
 import { useNavigate } from "react-router-dom";
 import { FormState } from "./signup";
-
-const ADMIN_HOST = import.meta.env.VITE_AWS_ADMIN_HOST;
+import { login } from "../services/auth";
+import { HTTPS_UNAUTHORIZED } from "../constants";
+import { useAuthStore } from "../stores/auth-store";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const setAuth = useAuthStore((state) => state.setAuth);
 
   const [formState, setFormState] = useState<FormState>({
     email: {
@@ -21,6 +23,19 @@ const Login: React.FC = () => {
       error: "",
     },
   });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/admin/dashboard");
+    }
+  }, []);
+
+  // once authenticated, navigate to admin dashboard
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/admin/dashboard");
+    }
+  }, [isAuthenticated]);
 
   const handleFormChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -62,7 +77,7 @@ const Login: React.FC = () => {
     }
   };
 
-  const handleSignup = (e: FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     let errorFlag = false;
@@ -74,35 +89,29 @@ const Login: React.FC = () => {
 
     if (errorFlag) return;
 
-    const payload = {
-      email: formState["email"].value,
-      password: formState["password"].value,
-    };
+    // send login request
+    const response = await login(
+      formState["email"].value,
+      formState["password"].value,
+      "ADMIN"
+    );
 
-    console.log(payload);
-
-    // add post api here
-    signAndRequest(
-      "POST",
-      ADMIN_HOST,
-      "/default/psychometricAdmin/admin?action=login",
-      payload
-    ).then(() => {
-        alert("Login successful!");
-        navigate("/admin/dashboard");
-      })
-      .catch((err: string) => {
-        alert(err);
-      });
+    if (response.ok) {
+      alert("Login Successful!");
+      const { token } = response.data;
+      const { email, name } = response.data["admin"];
+      setAuth(token, "ADMIN", { name, email });
+    } else if (response.status == HTTPS_UNAUTHORIZED) {
+      alert("Invalid credentials");
+    }
   };
 
   return (
     <>
       <form
-        onSubmit={handleSignup}
+        onSubmit={handleLogin}
         className="w-full flex items-center -mt-10 lg:items-center flex-col gap-2"
       >
-      
         <div className="flex flex-col gap-1 w-full justify-start items-center mb-5">
           <label className="text-sm">Please enter your Email ID</label>
           <Input
@@ -117,7 +126,7 @@ const Login: React.FC = () => {
           )}
         </div>
         <div className="flex flex-col gap-1 w-full justify-start items-center mb-5">
-          <label className="text-sm">Type a password</label>
+          <label className="text-sm">Enter password</label>
           <Input
             name="password"
             onChange={handleFormChange}

@@ -27,5 +27,13 @@ export async function signAndRequest(
     service,
   });
   
-  return client.fetch(url, options);
+  const response = await client.fetch(url, options);
+  const data = await response.json();
+
+  return {
+    status: response.status,
+    ok: response.ok,
+    data,
+    headers: response.headers,
+  };;
 }

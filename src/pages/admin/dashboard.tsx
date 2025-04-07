@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { PiBuildingApartmentFill } from "react-icons/pi";
 import { IoPeople } from "react-icons/io5";
 import { FaWpforms } from "react-icons/fa";
 import { TabGroup, TabList } from "@headlessui/react";
 import DashboardSidebar from "../../components/ui/sidebar";
+import { useAuthStore } from "../../components/stores/auth-store";
+import { useNavigate } from "react-router-dom";
 
 const AdminDashboard: React.FC = () => {
+
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+  const userType = useAuthStore(state => state.userType);
+
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if(!isAuthenticated || userType !== "ADMIN") {
+      navigate("/admin/login");
+    }
+  }, [isAuthenticated, userType])
+
   const stats = [
     {
       title: "Organizations",
@@ -59,7 +73,7 @@ const AdminDashboard: React.FC = () => {
         "
         >
           {stats.map((stat, id) => (
-            <div
+            <button
               className="px-5 py-3 w-full lg:w-fit bg-primary/10 hover:bg-primary/20 hover:-translate-y-1 transition duration-200 gap-4 shadow-lg backdrop-blur-lg rounded-lg flex justify-start items-center"
               key={id}
             >
@@ -72,7 +86,7 @@ const AdminDashboard: React.FC = () => {
                 </p>
                 <p className="text-xs">{stat.title}</p>
               </div>
-            </div>
+            </button>
           ))}
         </div>
 
