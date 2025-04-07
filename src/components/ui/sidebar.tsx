@@ -1,5 +1,5 @@
 import React from "react";
-import logoTransparent from "../assets/logo-transparent.png"
+import logoTransparent from "../../assets/logo-transparent.png"
 import { GoHomeFill } from "react-icons/go";
 import { PiBuildingApartmentFill } from "react-icons/pi";
 import { IoPeople } from "react-icons/io5";

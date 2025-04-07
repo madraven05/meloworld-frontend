@@ -3,12 +3,11 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Layout as AuthLayout } from "./pages/auth/layout";
 import adminImage from "./assets/admin-login-3d.png";
 import orgLogin from "./assets/org-login.png";
-import Navbar from "./components/navbar";
 import AdminDashboard from "./pages/admin/dashboard";
 import waveImg from "./assets/login-wave.png";
 import { motion } from "framer-motion";
-import Login from "./pages/auth/login";
-import SignUp from "./pages/auth/signup";
+import SignUp from "./components/forms/signup";
+import Login from "./components/forms/login";
 
 function App() {
   return (

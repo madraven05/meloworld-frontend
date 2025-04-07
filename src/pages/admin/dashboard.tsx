@@ -3,7 +3,7 @@ import { PiBuildingApartmentFill } from "react-icons/pi";
 import { IoPeople } from "react-icons/io5";
 import { FaWpforms } from "react-icons/fa";
 import { TabGroup, TabList } from "@headlessui/react";
-import DashboardSidebar from "../../components/sidebar";
+import DashboardSidebar from "../../components/ui/sidebar";
 
 const AdminDashboard: React.FC = () => {
   const stats = [

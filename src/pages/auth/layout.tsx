@@ -1,10 +1,10 @@
 import React, { ReactNode } from "react";
-import Input from "../../components/input";
+import Input from "../../components/ui/input";
 import { IoLockClosed, IoPerson } from "react-icons/io5";
-import Button from "../../components/button";
+import Button from "../../components/ui/button";
 import { motion } from "framer-motion";
 import logo from "../../assets/logo-white.png";
-import Navbar from "../../components/navbar";
+import Navbar from "../../components/ui/navbar";
 
 interface LayoutProps {
   imgSrc: string;
