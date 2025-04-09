@@ -13,7 +13,7 @@
     "@aws-crypto/sha256-browser": "^5.2.0",
     "@aws-sdk/protocol-http": "^3.370.0",
     "@aws-sdk/signature-v4": "^3.370.0",
-    "@headlessui/react": "^2.2.0",
+    "@headlessui/react": "^2.2.1",
     "@tailwindcss/vite": "^4.0.17",
     "aws4fetch": "^1.0.20",
     "axios": "^1.8.4",

@@ -5,6 +5,8 @@ import Button from "../../components/ui/button";
 import { motion } from "framer-motion";
 import logo from "../../assets/logo-white.png";
 import Navbar from "../../components/ui/navbar";
+import waveImg from "../../assets/login-wave.png";
+
 
 interface LayoutProps {
   imgSrc: string;
@@ -15,7 +17,15 @@ export const Layout: React.FC<LayoutProps> = ({ imgSrc, children }) => {
   return (
     <>
       <Navbar />
-      <div className="h-full w-full flex items-center justify-center pt-18 lg:px-20 lg:pt-32 md:px-20 md:pt-32 md:pb-10">
+      <motion.img
+        initial={{ opacity: 0 }}
+        animate={{ y: 0, opacity: 0.7 }}
+        transition={{ duration: 0.75, ease: "easeIn" }}
+        className="fixed lg:block bottom-0 w-full z-10 lg:-z-10 md:-z-10"
+        src={waveImg}
+        alt="Background wave"
+      />
+      <div className="h-full w-full bg-secondary flex items-center justify-center pt-18 lg:px-20 lg:pt-32 md:px-20 md:pt-32 md:pb-10">
         {/* Main container */}
         <motion.div
           initial={{ y: -100 }}

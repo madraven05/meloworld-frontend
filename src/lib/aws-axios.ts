@@ -7,6 +7,7 @@ const service = import.meta.env.VITE_AWS_ADMIN_HOST
 
 export async function signAndRequest(
   method: string,
+  headers: Record<string, string>,
   hostname: string,
   path: string,
   body?: Record<string, unknown>
@@ -15,10 +16,13 @@ export async function signAndRequest(
   const options = {
     method: method, 
     headers: {
+      ...headers,
       'Content-Type': 'application/json',
     },
     body: body ? JSON.stringify(body) : undefined,
   };
+
+  console.log(options);
 
   const client = new AwsClient({
     accessKeyId,
@@ -35,5 +39,5 @@ export async function signAndRequest(
     ok: response.ok,
     data,
     headers: response.headers,
-  };;
+  };
 }

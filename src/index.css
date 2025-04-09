@@ -9,19 +9,19 @@
 }
 
 body {
-    @apply bg-secondary font-poppins text-sky-900 font-light;
+    @apply bg-white  font-poppins text-sky-900 font-light;
 }
 
 h1 {
-    @apply text-2xl lg:text-2xl font-poppins font-bold;
+    @apply text-xl lg:text-2xl font-poppins font-bold;
 }
 
 h2 {
-    @apply text-xl lg:text-xl font-poppins font-bold;
+    @apply text-lg lg:text-lg font-poppins font-bold;
 }
 
 h3 {
-    @apply text-lg lg:text-lg font-poppins font-semibold;
+    @apply text-base lg:text-base font-poppins font-semibold;
 }
 
 a {
@@ -30,6 +30,14 @@ a {
 
 button {
     @apply hover:cursor-pointer;
+}
+
+td {
+    @apply px-8 w-full py-4 text-xs border-y-2 border-gray-200 text-center;
+}
+
+.card {
+    @apply bg-transparent border-2 border-gray-100 backdrop-blur-xl shadow-lg rounded-xl;
 }
 
 .glass-container {

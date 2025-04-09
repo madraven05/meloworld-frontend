@@ -19,6 +19,7 @@ export const signup = async (
 
   const response = await signAndRequest(
     "POST",
+    {},
     userTypeHost[userType],
     "/default/psychometricAdmin/admin?action=register",
     payload
@@ -39,6 +40,7 @@ export const login = async (
 
   const response = await signAndRequest(
     "POST",
+    {},
     userTypeHost[userType],
     "/default/psychometricAdmin/admin?action=login",
     payload

@@ -4,9 +4,15 @@ import { motion } from "framer-motion";
 /**
  * We extract all the props that motion.button accepts:
  */
-interface ButtonProps extends ComponentPropsWithoutRef<typeof motion.button> {}
+interface ButtonProps extends ComponentPropsWithoutRef<typeof motion.button> {
+  size?: "xs" | "sm" | "md" | "lg";
+}
 
-const Button: React.FC<ButtonProps> = ({ className = "", ...props }) => {
+const Button: React.FC<ButtonProps> = ({
+  className = "",
+  size = "md",
+  ...props
+}) => {
   return (
     <motion.button
       initial={{ backgroundSize: "0% 100%", color: "#024a70" }}
@@ -14,9 +20,10 @@ const Button: React.FC<ButtonProps> = ({ className = "", ...props }) => {
       transition={{ duration: 0.1, ease: "easeInOut" }}
       whileTap={{ scale: 0.95 }}
       className={`
+        text-${size}
         relative
         overflow-hidden
-        px-5 py-2
+        px-2 lg:px-5 py-2
         font-semibold
         shadow-lg
         rounded-xl
