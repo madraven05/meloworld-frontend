@@ -4,7 +4,7 @@ import { IoKey, IoMail } from "react-icons/io5";
 import Input from "../ui/input";
 import { useNavigate } from "react-router-dom";
 import { FormState } from "./signup";
-import { login } from "../services/auth";
+import { login } from "../../services/auth";
 import { HTTPS_UNAUTHORIZED } from "../constants";
 import { useAuthStore } from "../stores/auth-store";
 

@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Layout as AuthLayout } from "./pages/auth/layout";
 import adminImage from "./assets/admin-login-3d.png";
 import orgLogin from "./assets/org-login.png";
@@ -7,6 +7,9 @@ import AdminDashboard from "./pages/admin/admin-dashboard";
 import { motion } from "framer-motion";
 import SignUp from "./components/forms/signup";
 import Login from "./components/forms/login";
+import PrivateRoute from "./components/private-route";
+import AdminHome from "./pages/admin/panels/home/admin-home";
+import AssessmentsPanel from "./pages/admin/panels/assessments/assessments-panel";
 
 function App() {
   return (
@@ -40,7 +43,13 @@ function App() {
               </AuthLayout>
             }
           />
-          <Route path="/admin/dashboard/*" element={<AdminDashboard />} />
+          <Route element={<PrivateRoute path="/admin/login" />}>
+            <Route path="/admin/dashboard/*" element={<AdminDashboard />}>
+              <Route index element={<Navigate to="home" replace />} />
+              <Route index path="home" element={<AdminHome />} />
+              <Route path="assessments/*" element={<AssessmentsPanel />} />
+            </Route>
+          </Route>
 
           {/* Org routes */}
           <Route
@@ -51,7 +60,6 @@ function App() {
               </AuthLayout>
             }
           />
-          
         </Routes>
       </Router>
     </>

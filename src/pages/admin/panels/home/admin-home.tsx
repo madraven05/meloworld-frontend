@@ -6,8 +6,10 @@ import { FaWpforms } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { IoNotifications } from "react-icons/io5";
 import blankProfilePic from "../../../../assets/blank-profile-pic.webp";
+import dashboardImg from "../../../../assets/Work time-amico.png";
 import AssessmentTable from "./assessment-table";
 import OrganizationTable from "./organizations-table";
+
 
 const stats = [
   {
@@ -47,19 +49,8 @@ const AdminHome: React.FC = () => {
   }, [isAuthenticated]);
 
   return (
-    <div
-      className="
-    w-full
-    h-full
-    overflow-auto
-    flex
-    p-10
-    flex-wrap
-    gap-5
-    items-start
-    justify-start
-  "
-    >
+    <div className="dashboard-panel">
+      <img src={dashboardImg} className="fixed top-1/2 left-1/2 -translate-y-50 -translate-x-50 lg:translate-y-0 lg:top-0 lg:w-1/2 -z-10 opacity-20"/>
       <div className="flex w-full justify-between items-center">
         <div>
           <h1>
@@ -97,7 +88,9 @@ const AdminHome: React.FC = () => {
             <div className="text-primary/70 rounded-lg text-4xl p-1">
               {stat.icon}
             </div>
-            <p className="text-xl lg:text-3xl font-bold">{stat.stat.toLocaleString()}</p>
+            <p className="text-xl lg:text-3xl font-bold">
+              {stat.stat.toLocaleString()}
+            </p>
             <p className="text-xs">{stat.title}</p>
           </div>
         ))}
@@ -106,7 +99,7 @@ const AdminHome: React.FC = () => {
       {/* Main content */}
       <div className="w-full flex flex-wrap lg:flex-nowrap gap-2 justify-between">
         <AssessmentTable />
-        <OrganizationTable/>
+        <OrganizationTable />
       </div>
     </div>
   );

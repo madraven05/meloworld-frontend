@@ -16,7 +16,7 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <motion.button
       initial={{ backgroundSize: "0% 100%", color: "#024a70" }}
-      whileHover={{ backgroundSize: "100% 100%", color: "#ffffff" }}
+      whileHover={{ backgroundSize: "100% 100%", color: "#fde9da" }}
       transition={{ duration: 0.1, ease: "easeInOut" }}
       whileTap={{ scale: 0.95 }}
       className={`
@@ -25,6 +25,7 @@ const Button: React.FC<ButtonProps> = ({
         overflow-hidden
         px-2 lg:px-5 py-2
         font-semibold
+        min-h-max
         shadow-lg
         rounded-xl
         border-2 border-sky-900

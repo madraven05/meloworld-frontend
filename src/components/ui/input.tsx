@@ -2,11 +2,12 @@ import React, { InputHTMLAttributes, ReactNode } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon: ReactNode;
+  textSize?: "xs" | "sm" | "base" | "lg"
 }
 
-const Input: React.FC<InputProps> = ({ icon, ...props }) => {
+const Input: React.FC<InputProps> = ({ icon,textSize = "base", ...props }) => {
   return (
-    <div className="relative w-full max-w-sm">
+    <div className={`relative w-full max-w-sm text-${textSize}`}>
       <span className="absolute inset-y-0 left-0 z-5 flex items-center pl-3">
         {icon}
       </span>

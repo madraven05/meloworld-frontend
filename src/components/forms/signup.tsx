@@ -3,7 +3,7 @@ import Button from "../ui/button";
 import { IoKey, IoMail, IoPerson } from "react-icons/io5";
 import Input from "../ui/input";
 import { useNavigate } from "react-router-dom";
-import { signup } from "../services/auth";
+import { signup } from "../../services/auth";
 
 export type FormState = { [key: string]: { value: string; error: string } };
 

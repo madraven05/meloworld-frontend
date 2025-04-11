@@ -12,7 +12,7 @@ const Table: React.FC<TableProps> = ({ headings, children }) => {
         <thead>
           <tr>
             {headings.map((header, id) => (
-              <th className="py-2 text-xs tracking-wider font-bold text-center px-6" key={id}>
+              <th className="py-2 text-xs tracking-wider font-bold text-start px-6" key={id}>
                 {header}
               </th>
             ))}
