@@ -11,8 +11,8 @@ export type Chapter = {
   course_id: number;
   title: string;
   chapter_order: number;
-  created_at: string; // ISO date string
-  updated_at: string; // ISO date string
+  created_at: string;
+  updated_at: string;
 };
 
 export type Question = {
@@ -26,7 +26,7 @@ export type Quiz = {
   chapter_id: number;
   title: string;
   questions: Question[];
-  created_at: string; // or Date if you plan to parse it
-  updated_at: string; // or Date if you plan to parse it
+  created_at: string;
+  updated_at: string;
 };
 
