@@ -9,6 +9,7 @@ interface PrivateRouteProps {
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ path }) => {
   const { isAuthenticated } = useAuthStore();
   return isAuthenticated ? <Outlet /> : <Navigate to={path} />;
+ 
 };
 
 export default PrivateRoute;

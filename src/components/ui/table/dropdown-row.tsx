@@ -80,7 +80,7 @@ import React, {
           onClick={toggle}
           onKeyDown={handleKey}
           className={clsx(
-            'cursor-pointer transition-colors hover:bg-gray-100',
+            'cursor-pointer transition-colors duration-100',
             className,
           )}
         >
@@ -89,7 +89,7 @@ import React, {
   
         {open && (
           <tr className='w-full'>
-            <td colSpan={colCount} className="w-full bg-gray-50 py-4">
+            <td colSpan={colCount} className="w-full py-4">
               {dropdownContent}
             </td>
           </tr>

@@ -1,11 +1,11 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import Button from "../ui/button";
+import Button from "../ui/button/button";
 import { IoKey, IoMail, IoPerson } from "react-icons/io5";
-import Input from "../ui/input";
+import Input from "../ui/input/input";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../../services/auth";
 
-export type FormState = { [key: string]: { value: string; error: string } };
+export type FormState = { [key: string]: { value: any; error: string } };
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Card from "../../../../components/ui/card";
+import Card from "../../../../components/ui/card/card";
 import { useAuthStore } from "../../../../components/stores/auth-store";
 import { getAllAssessments } from "../../../../components/services/assessments";
 import { Assessment } from "../../../../components/types";
 import { Switch } from "@headlessui/react";
 import Table from "../../../../components/ui/table/table";
 import { FaArrowRight } from "react-icons/fa6";
-import Button from "../../../../components/ui/button";
+import Button from "../../../../components/ui/button/button";
 
 
 const OrganizationTable: React.FC = () => {

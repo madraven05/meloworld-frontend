@@ -9,7 +9,8 @@ import blankProfilePic from "../../../../assets/blank-profile-pic.webp";
 import dashboardImg from "../../../../assets/Work time-amico.png";
 import AssessmentTable from "./assessment-table";
 import OrganizationTable from "./organizations-table";
-
+import ReportsTable from "./reports-table";
+import EmailsTable from "./emails-table";
 
 const stats = [
   {
@@ -50,7 +51,10 @@ const AdminHome: React.FC = () => {
 
   return (
     <div className="dashboard-panel">
-      <img src={dashboardImg} className="fixed top-1/2 left-1/2 -translate-y-50 -translate-x-50 lg:translate-y-0 lg:top-0 lg:w-1/2 -z-10 opacity-20"/>
+      <img
+        src={dashboardImg}
+        className="fixed top-1/2 left-1/2 -translate-y-50 -translate-x-50 lg:translate-y-0 lg:top-0 lg:w-1/2 -z-10 opacity-20"
+      />
       <div className="flex w-full justify-between items-center">
         <div>
           <h1>
@@ -97,9 +101,15 @@ const AdminHome: React.FC = () => {
       </div>
 
       {/* Main content */}
-      <div className="w-full flex flex-wrap lg:flex-nowrap gap-2 justify-between">
-        <AssessmentTable />
-        <OrganizationTable />
+      <div className="w-full flex flex-col flex-wrap gap-2 justify-between">
+        <div className="flex flex-wrap lg:flex-nowrap gap-2 w-full items-center">
+          <AssessmentTable />
+          <OrganizationTable />
+        </div>
+        <div className="flex flex-wrap lg:flex-nowrap gap-2 w-full items-center">
+          <ReportsTable />
+          <EmailsTable />
+        </div>
       </div>
     </div>
   );

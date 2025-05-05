@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Card from "../../../../components/ui/card";
+import Card from "../../../../components/ui/card/card";
 import { useAuthStore } from "../../../../components/stores/auth-store";
 import { Assessment } from "../../../../components/types";
 import Table from "../../../../components/ui/table/table";
-import Button from "../../../../components/ui/button";
+import Button from "../../../../components/ui/button/button";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { getAllAssessments } from "../../../../services/assessments";

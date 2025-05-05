@@ -1,8 +1,8 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import Button from "../ui/button";
+import Button from "../ui/button/button";
 import { IoKey, IoMail } from "react-icons/io5";
-import Input from "../ui/input";
-import { useNavigate } from "react-router-dom";
+import Input from "../ui/input/input";
+import { Link, useNavigate } from "react-router-dom";
 import { FormState } from "./signup";
 import { login } from "../../services/auth";
 import { HTTPS_UNAUTHORIZED } from "../constants";
@@ -147,7 +147,7 @@ const Login: React.FC = () => {
       </form>
       <p className="text-sm mt-4 text-center">
         Don't have an account?{" "}
-        <a className="font-semibold hover:underline">Sign up</a>
+        <Link to="/admin/signup" className="font-semibold hover:underline">Sign up</Link>
       </p>
     </>
   );

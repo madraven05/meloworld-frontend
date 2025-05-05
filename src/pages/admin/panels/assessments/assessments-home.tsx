@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
-import Card from "../../../../components/ui/card";
-import Input from "../../../../components/ui/input";
+import Card from "../../../../components/ui/card/card";
+import Input from "../../../../components/ui/input/input";
 import { FaSearch } from "react-icons/fa";
 import Table from "../../../../components/ui/table/table";
 import { useAuthStore } from "../../../../components/stores/auth-store";
 import { Assessment } from "../../../../components/types";
 import AssessmentDropdownRow from "./assessment-dropdown-row";
 import { getAllAssessments } from "../../../../services/assessments";
+import { IoFilter } from "react-icons/io5";
+import Button from "../../../../components/ui/button/button";
+import { FaFilter, FaSort } from "react-icons/fa6";
 
-const AssessmentsHome:React.FC = () => {
+const AssessmentsHome: React.FC = () => {
   const token = useAuthStore((state) => state.token);
   const [assessments, setAssessments] = useState<Assessment[]>([]);
 
@@ -32,12 +35,23 @@ const AssessmentsHome:React.FC = () => {
       <h1>Assessments</h1>
 
       <Card className="flex flex-col gap-10 w-full h-full p-10">
-        <div className="">
+        <div className="flex w-full justify-between items-center">
           <Input
+            size="sm"
             textSize="xs"
             placeholder="Search Assessments"
             icon={<FaSearch />}
           />
+          <div className="flex gap-2">
+            <Button size="xs" className="flex gap-2">
+              <FaSort />
+              <p className="hidden lg:block">Sort</p>
+            </Button>
+            <Button size="xs" className="flex gap-2">
+              <FaFilter />
+              <p className="hidden lg:block">Filter</p>
+            </Button>
+          </div>
         </div>
         <Table headings={["Title", "Description", "Created At", "Updated At"]}>
           {assessments.map((a) => (

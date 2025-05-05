@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TbMenu3 } from "react-icons/tb";
 import { IoClose } from "react-icons/io5";
 import { AnimatePresence, motion } from "framer-motion";
+import logo from "../../assets/logo-transparent.png";
 
 const Navbar: React.FC = () => {
   const [navbarItems] = useState([
@@ -16,19 +17,25 @@ const Navbar: React.FC = () => {
   return (
     <div className="fixed top-0 w-full z-50">
       {/* Desktop navbar (shown only in lg and md screens) */}
-      <div className="bg-primary/5 backdrop-blur-xl w-full rounded-xl p-5 shadow-lg lg:flex md:flex gap-5 hidden">
-        {navbarItems.map((item, idx) => (
-          <a className="font-semibold" href={item.link} key={idx}>
-            {item.name}
-          </a>
-        ))}
+      <div className="bg-secondary backdrop-blur-xl w-full px-10 py-2 justify-between items-center shadow-lg lg:flex md:flex gap-5 hidden">
+        <div className="flex items-center gap-2">
+          <img src={logo} className="w-12 " />
+          <h1 className="text-2xl text-primary">Meloworld</h1>
+        </div>
+        <div className="h-full flex justify-center items-center gap-5">
+          {navbarItems.map((item, idx) => (
+            <a className="font-semibold" href={item.link} key={idx}>
+              {item.name}
+            </a>
+          ))}
+        </div>
       </div>
 
       {/* Mobile Button (hidden in lg and md) */}
       <div className="lg:hidden md:hidden">
         <button
           onClick={() => setShowMenu(!showMenu)}
-          className="fixed top-5 right-5 rounded-full p-2 bg-primary/20 shadow-lg z-50"
+          className="fixed top-5 right-5 rounded-full p-2 bg-secondary shadow-lg z-50"
         >
           {!showMenu ? (
             <TbMenu3 className="text-2xl" />
@@ -52,7 +59,7 @@ const Navbar: React.FC = () => {
               h-screen
               w-3/4
               md:w-1/2
-              bg-primary/70
+              bg-secondary
               shadow-lg
               backdrop-blur-lg
               z-50
@@ -65,11 +72,7 @@ const Navbar: React.FC = () => {
             "
             >
               {navbarItems.map((item, idx) => (
-                <a
-                  className="font-semibold"
-                  href={item.link}
-                  key={idx}
-                >
+                <a className="font-semibold" href={item.link} key={idx}>
                   {item.name}
                 </a>
               ))}

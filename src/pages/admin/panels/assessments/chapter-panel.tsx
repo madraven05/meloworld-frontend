@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Button from "../../../../components/ui/button";
+import Button from "../../../../components/ui/button/button";
 import { FaAngleLeft, FaPlus } from "react-icons/fa6";
 import { useAuthStore } from "../../../../components/stores/auth-store";
 import { getChapterById } from "../../../../services/chapters";
 import { Chapter, Quiz } from "../../../../components/types";
-import Dropdown from "../../../../components/ui/dropdown";
+import Dropdown from "../../../../components/ui/dropdown/dropdown";
 import { getAllQuizzesByChapter } from "../../../../services/quizzes";
 import QuestionCard from "./question-card";
-import chapterImg from "../../../../assets/Exams-rafiki.png";
+import AddQuestionForm from "../../../../components/forms/add-question";
+import { AnimatePresence, motion } from "framer-motion";
 
 const ChapterPanel: React.FC = () => {
   const navigate = useNavigate();
@@ -20,6 +21,12 @@ const ChapterPanel: React.FC = () => {
 
   const [chapter, setChapter] = useState<Chapter | null>();
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
+  const [showQuestionForm, setShowQuestionForm] = useState<{
+    active: boolean;
+    quiz?: Quiz;
+  }>({
+    active: false,
+  });
 
   useEffect(() => {
     const fetchChapter = async () => {
@@ -54,7 +61,7 @@ const ChapterPanel: React.FC = () => {
   }, []);
 
   return (
-    <div className="h-full w-full flex flex-col gap-5 items-start justify-start">
+    <div className="relative h-full w-full flex flex-col gap-5 items-start justify-start">
       <Button
         onClick={() => navigate("/admin/dashboard/assessments")}
         size="xs"
@@ -85,11 +92,7 @@ const ChapterPanel: React.FC = () => {
         laborum dolore.
       </p>
       <div className="h-0.5 w-full bg-secondary" />
-      <div className="relative w-full px-3 flex-col flex gap-2">
-        <img
-          className="fixed left-0 lg:top-1/2 lg:left-1/2 lg:-translate-y-30 lg:-translate-x-30 w-96 opacity-30 -z-10"
-          src={chapterImg}
-        />
+      <div className="relative w-full flex-col flex gap-2">
         <h2>Quizzes</h2>
         <div className="flex flex-col gap-5 items-center justify-center w-full">
           {quizzes.map((quiz, idx) => (
@@ -99,13 +102,43 @@ const ChapterPanel: React.FC = () => {
                   <QuestionCard question={ques} key={id} />
                 ))}
                 <div className="lg:w-full flex items-center justify-center">
-                <Button size="sm" className="flex gap-2 items-center w-fit"> <FaPlus/> Add Question</Button>
+                  <Button
+                    onClick={() =>
+                      setShowQuestionForm({ active: true, quiz: quiz })
+                    }
+                    size="xs"
+                    className="flex gap-2 items-center w-fit"
+                  >
+                    <FaPlus /> Add Question
+                  </Button>
                 </div>
               </div>
             </Dropdown>
           ))}
         </div>
       </div>
+      <AnimatePresence>
+        {showQuestionForm.active && (
+          <motion.div
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, ease: "backInOut" }}
+            exit={{ x: "100%", opacity: 0 }}
+            className="fixed p-10 right-0 top-0 h-full w-full lg:w-1/2 bg-secondary shadow-xl"
+          >
+            <div className="absolute top-0 left-0 text-secondary py-5 px-12 w-full bg-sky-900">
+              <h1>Add Question</h1>
+            </div>
+            <div className="w-full h-full mt-14">
+              <AddQuestionForm
+                chapterId={Number(chapterId)}
+                quiz={showQuestionForm.quiz}
+                onClose={() => setShowQuestionForm({ active: false })}
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

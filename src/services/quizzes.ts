@@ -17,3 +17,21 @@ export const getAllQuizzesByChapter = async (
   const response = await fetch(url, options);
   return response;
 };
+
+export const updateQuiz = async (
+  token: string,
+  body: string
+) => {
+  const url = `https://${QUIZ_HOST}/default/psychometricQuiz/quiz?action=updateQuiz`;
+  const options = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: body,
+  };
+
+  const response = await fetch(url, options);
+  return response;
+}
