@@ -1,50 +1,94 @@
-import { UserType } from "../components/stores/auth-store";
 import { signAndRequest } from "../lib/aws-axios";
 
 const userTypeHost: { [type: string]: string } = {
-  ADMIN: import.meta.env.VITE_AWS_ADMIN_HOST,
+  admin: import.meta.env.VITE_AWS_ADMIN_HOST,
+  org: import.meta.env.VITE_AWS_ADMIN_HOST,
+  candidate: import.meta.env.VITE_AWS_CANDIDATE_HOST,
 };
 
-export const signup = async (
-  name: string,
-  email: string,
-  password: string,
-  userType: UserType
-) => {
-  const payload = {
-    name: name,
-    email: email,
-    password: password,
-  };
+export const signupService = {
+  admin: async (
+    name: string,
+    email: string,
+    password: string,
+  ) => {
+    const payload = {
+      name: name,
+      email: email,
+      password: password,
+    };
 
-  const response = await signAndRequest(
-    "POST",
-    {},
-    userTypeHost[userType],
-    "/default/psychometricAdmin/admin?action=register",
-    payload
-  );
+    const response = await signAndRequest(
+      "POST",
+      {},
+      userTypeHost["admin"],
+      "/default/psychometricAdmin/admin?action=register",
+      payload
+    );
 
-  return response;
+    return response;
+  },
+  candidate: async (
+    name: string,
+    email: string,
+    password: string,
+  ) => {
+    const payload = {
+      name: name,
+      email: email,
+      password: password,
+      organization_id: 1
+    };
+
+    const response = await signAndRequest(
+      "POST",
+      {},
+      userTypeHost["candidate"],
+      "/default/psychometricUser/user?action=register",
+      payload
+    );
+
+    return response;
+  },
 };
 
-export const login = async (
-  email: string,
-  password: string,
-  userType: UserType
-) => {
-  const payload = {
-    email: email,
-    password: password,
-  };
-
-  const response = await signAndRequest(
-    "POST",
-    {},
-    userTypeHost[userType],
-    "/default/psychometricAdmin/admin?action=login",
-    payload
-  );
-
-  return response;
-};
+export const loginService = {
+  admin: async (
+    email: string,
+    password: string,
+  ) => {
+    const payload = {
+      email: email,
+      password: password,
+    };
+  
+    const response = await signAndRequest(
+      "POST",
+      {},
+      userTypeHost["admin"],
+      "/default/psychometricAdmin/admin?action=login",
+      payload
+    );
+  
+    return response;
+  },
+  candidate: async (
+    email: string,
+    password: string,
+  ) => {
+    const payload = {
+      email: email,
+      password: password,
+    };
+  
+    const response = await signAndRequest(
+      "POST",
+      {},
+      userTypeHost["candidate"],
+      "/default/psychometricUser/user?action=login",
+      payload
+    );
+  
+    return response;
+  }
+}

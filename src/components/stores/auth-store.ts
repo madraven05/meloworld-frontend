@@ -1,8 +1,8 @@
 // stores/authStore.ts
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
+import { UserRole } from "../types";
 
-export type UserType = "ADMIN" | "ORG" | "CANDIDATE";
 
 interface UserMetadata {
   name: string;
@@ -12,10 +12,10 @@ interface UserMetadata {
 
 interface AuthStore {
   token: string | null;
-  userType: UserType | null;
+  userRole: UserRole | null;
   metadata: UserMetadata | null;
   isAuthenticated: boolean;
-  setAuth: (token: string, userType: UserType, metadata: UserMetadata) => void;
+  setAuth: (token: string, UserRole: UserRole, metadata: UserMetadata) => void;
   clearAuth: () => void;
 }
 
@@ -24,15 +24,15 @@ export const useAuthStore = create<AuthStore>()(
     persist(
       (set) => ({
         token: null,
-        userType: null,
+        userRole: null,
         metadata: null,
         isAuthenticated: false,
 
-        setAuth: (token, userType, metadata) =>
+        setAuth: (token, userRole, metadata) =>
           set(
             {
               token,
-              userType,
+              userRole,
               metadata,
               isAuthenticated: true,
             },
@@ -44,7 +44,7 @@ export const useAuthStore = create<AuthStore>()(
           set(
             {
               token: null,
-              userType: null,
+              userRole: null,
               metadata: null,
               isAuthenticated: false,
             },

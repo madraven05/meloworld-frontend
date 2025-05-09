@@ -15,9 +15,10 @@ import PrivateRoute from "./components/private-route";
 import AdminHome from "./pages/admin/panels/home/admin-home";
 import AssessmentsPanel from "./pages/admin/panels/assessments/assessments-panel";
 import CandidateHome from "./pages/candidate/candidate-home";
-import Scales from "./pages/candidate/scales";
+import Scales from "./pages/candidate/candidate-chapters";
 import AssessmentForm from "./pages/candidate/assessment-form";
 import Navbar from "./components/ui/navbar";
+import CandidatePage from "./pages/candidate/page";
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
             path="/admin/login"
             element={
               <AuthLayout imgSrc={adminImage}>
-                <Login />
+                <Login userRole="admin" />
               </AuthLayout>
             }
           />
@@ -39,7 +40,7 @@ function App() {
             path="/admin/signup"
             element={
               <AuthLayout imgSrc={adminImage}>
-                <SignUp />
+                <SignUp userRole="admin" />
               </AuthLayout>
             }
           />
@@ -56,17 +57,38 @@ function App() {
             path="/org/login"
             element={
               <AuthLayout imgSrc={orgLogin}>
-                <Login />
+                <Login userRole="org" />
               </AuthLayout>
             }
           />
           {/* Candidate routes */}
-          <Route path="/candidate" element={<CandidateHome />} />
-          <Route path="/candidate/scales/:scaleId" element={<Scales />} />
           <Route
-            path="/candidate/assessment/:assessmentId"
-            element={<AssessmentForm />}
+            path="/candidate/login"
+            element={
+              <AuthLayout imgSrc={adminImage}>
+                <Login userRole="candidate" />
+              </AuthLayout>
+            }
           />
+          <Route
+            path="/candidate/signup"
+            element={
+              <AuthLayout imgSrc={adminImage}>
+                <SignUp userRole="candidate" />
+              </AuthLayout>
+            }
+          />
+          <Route element={<PrivateRoute path="/candidate/login" />}>
+            <Route path="/candidate/*" element={<CandidatePage />}>
+              <Route index element={<Navigate to="home" replace />} />
+              <Route index path="home" element={<CandidateHome />} />
+              <Route path="scales/:courseId" element={<Scales />} />
+              <Route
+                path="assessment/:assessmentId"
+                element={<AssessmentForm />}
+              />
+            </Route>
+          </Route>
         </Routes>
       </Router>
     </>

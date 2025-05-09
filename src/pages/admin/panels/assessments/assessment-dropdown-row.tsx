@@ -48,7 +48,7 @@ const AssessmentDropdownRow: React.FC<AssessmentDropdownRowProps> = ({
                 .sort((a, b) => b.chapter_order - a.chapter_order)
                 .map((c, id) => (
                   <Card
-                    onClick={() => navigate(`chapter/${assessmentId}/${c.id}`)}
+                    
                     key={id}
                     className={`flex relative flex-col h-40 gap-2 shadow-md items-center rounded-xl border-gray-2 py-2 px-6 w-40 lg:w-full justify-center`}
                   >
@@ -57,7 +57,7 @@ const AssessmentDropdownRow: React.FC<AssessmentDropdownRowProps> = ({
                       className="absolute w-40 opacity-20"
                     />
                     <h3 className="w-full text-center font-semibold">{c.title}</h3>
-                    <Button size="xs">View More</Button>
+                    <Button onClick={() => navigate(`chapter/${assessmentId}/${c.id}`)} size="xs">View More</Button>
                   </Card>
                 ))}
                 <Card

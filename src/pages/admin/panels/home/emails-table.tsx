@@ -60,7 +60,7 @@ const EmailsTable: React.FC = () => {
   const headings = ["Name", "Candidates", "Status"];
 
   return (
-    <Card className="flex flex-col items-start gap-5 p-5 justify-start w-full h-96">
+    <Card className="flex bg-white flex-col items-start gap-5 p-5 justify-start w-full h-96">
       <div className="flex w-full justify-between items-center">
         <h2>Emails</h2>
         <Button size="xs" className="flex gap-2 items-center">

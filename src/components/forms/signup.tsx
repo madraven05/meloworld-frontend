@@ -3,13 +3,19 @@ import Button from "../ui/button/button";
 import { IoKey, IoMail, IoPerson } from "react-icons/io5";
 import Input from "../ui/input/input";
 import { useNavigate } from "react-router-dom";
-import { signup } from "../../services/auth";
+import { adminSignup, signupService } from "../../services/auth";
+import { UserRole } from "../types";
+import { useToast } from "../hooks/use-toast";
 
 export type FormState = { [key: string]: { value: any; error: string } };
 
-const SignUp: React.FC = () => {
-  const navigate = useNavigate();
+interface SignUpProps {
+  userRole: UserRole;
+}
 
+const SignUp: React.FC<SignUpProps> = ({ userRole }) => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [formState, setFormState] = useState<FormState>({
     name: {
       value: "",
@@ -109,18 +115,66 @@ const SignUp: React.FC = () => {
 
     if (errorFlag) return;
 
-    const response = await signup(
-      formState["name"].value,
-      formState["email"].value,
-      formState["password"].value,
-      "ADMIN"
-    );
+    try {
+      let response = null as {
+        status: number;
+        ok: boolean;
+        data: any;
+        headers: Headers;
+      } | null;
 
-    if(response.ok) {
-      alert("Signup Successful!")
-      navigate("/admin/login");
+      switch (userRole) {
+        case "admin":
+          response = await signupService.admin(
+            formState.name.value,
+            formState.email.value,
+            formState.password.value
+          );
+          if (response.ok) {
+            toast({
+              title: "Admin signup successful",
+              description: "Redirecting to admin dashboard…",
+              variant: "success",
+              position: "top-right",
+            });
+            navigate("/admin/dashboard");
+          }
+          break;
+
+        case "candidate":
+          response = await signupService.candidate(
+            formState.name.value,
+            formState.email.value,
+            formState.password.value
+          );
+          if (response.ok) {
+            toast({
+              title: "Signup successful",
+              description: "Redirecting to candidate portal…",
+              variant: "success",
+              position: "top-right",
+            });
+            navigate("/candidate/login");
+          }
+          break;
+
+        default:
+          // you can handle unsupported roles here
+          toast({
+            title: "Role not supported",
+            variant: "error",
+            position: "top-right",
+          });
+          return;
+      }
+    } catch (err) {
+      toast({
+        title: "Signup failed",
+        description: (err as any).message,
+        variant: "error",
+        position: "top-right",
+      });
     }
-    
   };
 
   return (

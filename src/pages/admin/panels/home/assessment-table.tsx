@@ -37,10 +37,10 @@ const AssessmentTable: React.FC = () => {
     }
   }, [assessments]);
 
-  const headings = ["Title", "Description", "Created At", "Updated At"];
+  const headings = ["Title", "Description", "img", "Created At", "Updated At"];
 
   return (
-    <Card className="flex flex-col items-start gap-5 p-5 justify-start w-full h-96">
+    <Card className="flex flex-col bg-white items-start gap-5 p-5 justify-start w-full h-96">
       <div className="flex w-full justify-between items-center">
         <h2>Assessments</h2>
         <Button onClick={() => navigate("/admin/dashboard/assessments")} size="xs" className="flex gap-2 items-center">

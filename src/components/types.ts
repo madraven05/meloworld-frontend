@@ -30,3 +30,4 @@ export type Quiz = {
   updated_at: string;
 };
 
+export type UserRole = "candidate" | "admin" | "org" | "therapist";

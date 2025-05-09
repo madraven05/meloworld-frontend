@@ -1,45 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import heroImg from "../../assets/emotional.png";
+import heroImg from "../../assets/personality.png";
 import Card from "../../components/ui/card/card";
 import Button from "../../components/ui/button/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAuthStore } from "../../components/stores/auth-store";
+import { getAllQuizzesByChapter } from "../../services/quizzes";
+import {  Quiz } from "../../components/types";
 
-const scaleData = [
-  {
-    title: "MBTI (Myers-Briggs Type Indicator)",
-    description: "Personality type (e.g., INFP, ESTJ)",
-    locked: false,
-  },
-  {
-    title: "Big Five (OCEAN)",
-    description:
-      "Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism",
-    locked: false,
-  },
-  {
-    title: "16PF (Sixteen Personality Factor Questionnaire)",
-    description: "16 primary personality traits",
-    locked: false,
-  },
-  {
-    title: "DISC Assessment",
-    description: "Dominance, Influence, Steadiness, Conscientiousness",
-    locked: true,
-  },
-  {
-    title: "HEXACO",
-    description: "6 traits including Honesty-Humility",
-    locked: true,
-  },
-];
-
-const Scales: React.FC = () => {
+const CandidateChapters: React.FC = () => {
   const navigate = useNavigate();
-
+  const { token } = useAuthStore();
+  const { courseId } = useParams<{
+    courseId: string;
+  }>();
+  const [quizzesData, setQuizzesData] = useState<Quiz[]>([]);
+  useEffect(() => {
+    const fetchChapters = async () => {
+      if (token) {
+        try {
+          const response = await getAllQuizzesByChapter(
+            token,
+            Number(courseId)
+          );
+          if (response?.ok) {
+            const data = await response.json();
+            const quizzes: Quiz[] = data.quizzes ?? [];
+            console.log("fetched courses:", quizzes);
+            setQuizzesData(quizzes);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    };
+    fetchChapters();
+  }, []);
   return (
     <motion.div
-      className="relative candidate min-h-screen w-full p-4 md:p-8 lg:p-12 overflow-x-hidden"
+      className="relative min-h-screen w-full p-4 md:p-8 lg:p-20 overflow-x-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -67,9 +66,9 @@ const Scales: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Scales List */}
+      {/* CandidateChapters List */}
       <div className="flex flex-col gap-4 text-sky-900">
-        {scaleData.map((scale, id) => (
+        {quizzesData.map((scale, id) => (
           <motion.div
             key={id}
             initial={{ opacity: 0, scale: 0.95 }}
@@ -77,9 +76,7 @@ const Scales: React.FC = () => {
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.4 }}
           >
-            <Card
-              className="bg-gradient-to-r from-secondary/10 to-secondary border border-sky-900 w-full h-48 md:h-52 lg:h-full py-4 px-4 md:px-6 text-center lg:text-start"
-            >
+            <Card className="bg-gradient-to-r from-secondary/10 to-secondary border border-sky-900 w-full h-48 md:h-52 lg:h-full py-4 px-4 md:px-6 text-center lg:text-start">
               <div
                 className="
                   flex flex-col lg:flex-row 
@@ -93,22 +90,18 @@ const Scales: React.FC = () => {
                   <p className="font-semibold text-sm md:text-lg">
                     {scale.title}
                   </p>
-                  <p className="text-xs text-sky-800">
-                    {scale.description}
-                  </p>
+                  <p className="text-xs text-sky-800">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
                 </div>
 
                 {/* Button Block */}
                 <div className="mt-4 lg:mt-0 flex items-center justify-center lg:justify-end">
-                  {scale.locked ? (
+                  {false ? (
                     <Button size="xs" disabled>
                       Locked
                     </Button>
                   ) : (
                     <Button
-                      onClick={() =>
-                        navigate(`/candidate/assessment/${id}`)
-                      }
+                      onClick={() => navigate(`/candidate/assessment/${id}`)}
                       size="xs"
                       variant="outline"
                     >
@@ -125,4 +118,4 @@ const Scales: React.FC = () => {
   );
 };
 
-export default Scales;
+export default CandidateChapters;

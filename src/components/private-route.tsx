@@ -7,8 +7,8 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ path }) => {
-  const { isAuthenticated } = useAuthStore();
-  return isAuthenticated ? <Outlet /> : <Navigate to={path} />;
+  const { isAuthenticated, userRole } = useAuthStore();
+  return isAuthenticated && userRole && path.includes(userRole.toLocaleLowerCase() as string) ? <Outlet /> : <Navigate to={path} />;
  
 };
 

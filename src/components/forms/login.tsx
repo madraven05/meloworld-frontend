@@ -4,14 +4,21 @@ import { IoKey, IoMail } from "react-icons/io5";
 import Input from "../ui/input/input";
 import { Link, useNavigate } from "react-router-dom";
 import { FormState } from "./signup";
-import { login } from "../../services/auth";
+import { adminLogin, loginService } from "../../services/auth";
 import { HTTPS_UNAUTHORIZED } from "../constants";
 import { useAuthStore } from "../stores/auth-store";
+import { UserRole } from "../types";
+import { useToast } from "../hooks/use-toast";
 
-const Login: React.FC = () => {
+interface LoginProps {
+  userRole: UserRole;
+}
+
+const Login: React.FC<LoginProps> = ({ userRole }) => {
   const navigate = useNavigate();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const setAuth = useAuthStore((state) => state.setAuth);
+  const { toast } = useToast();
 
   const [formState, setFormState] = useState<FormState>({
     email: {
@@ -26,14 +33,36 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/admin/dashboard");
+      switch (userRole) {
+        case "admin":
+          navigate("/admin/dashboard");
+          break;
+
+        case "candidate":
+          navigate("/candidate/home");
+          break;
+
+        default:
+          break;
+      }
     }
   }, []);
 
   // once authenticated, navigate to admin dashboard
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/admin/dashboard");
+      switch (userRole) {
+        case "admin":
+          navigate("/admin/dashboard");
+          break;
+
+        case "candidate":
+          navigate("/candidate/home");
+          break;
+
+        default:
+          break;
+      }
     }
   }, [isAuthenticated]);
 
@@ -90,19 +119,68 @@ const Login: React.FC = () => {
     if (errorFlag) return;
 
     // send login request
-    const response = await login(
-      formState["email"].value,
-      formState["password"].value,
-      "ADMIN"
-    );
+    try {
+      let response = null as {
+        status: number;
+        ok: boolean;
+        data: any;
+        headers: Headers;
+      } | null;
 
-    if (response.ok) {
-      alert("Login Successful!");
-      const { token } = response.data;
-      const { email, name } = response.data["admin"];
-      setAuth(token, "ADMIN", { name, email });
-    } else if (response.status == HTTPS_UNAUTHORIZED) {
-      alert("Invalid credentials");
+      switch (userRole) {
+        case "admin":
+          response = await loginService.admin(
+            formState.email.value,
+            formState.password.value
+          );
+          if (response.ok) {
+            const {token, name, email} = response.data;
+            toast({
+              title: "Admin signup successful",
+              description: "Redirecting to admin dashboard…",
+              variant: "success",
+              position: "top-right",
+            });
+            setAuth(token, "admin", { name, email });
+            navigate("/admin/dashboard");
+          }
+          break;
+
+        case "candidate":
+          
+          response = await loginService.candidate(
+            formState.email.value,
+            formState.password.value
+          );
+          if (response.ok) {
+            const {token, name, email} = response.data;
+            setAuth(token, "candidate", { name, email });
+            toast({
+              title: "Login successful",
+              description: "Redirecting to candidate portal…",
+              variant: "success",
+              position: "top-right",
+            });
+            navigate("/candidate");
+          }
+          break;
+
+        default:
+          // you can handle unsupported roles here
+          toast({
+            title: "Role not supported",
+            variant: "error",
+            position: "top-right",
+          });
+          return;
+      }
+    } catch (err) {
+      toast({
+        title: "Login failed",
+        description: (err as any).message,
+        variant: "error",
+        // position: "top-right",
+      });
     }
   };
 
@@ -147,7 +225,9 @@ const Login: React.FC = () => {
       </form>
       <p className="text-sm mt-4 text-center">
         Don't have an account?{" "}
-        <Link to="/admin/signup" className="font-semibold hover:underline">Sign up</Link>
+        <Link to="/admin/signup" className="font-semibold hover:underline">
+          Sign up
+        </Link>
       </p>
     </>
   );

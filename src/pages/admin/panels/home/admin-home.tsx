@@ -38,7 +38,7 @@ const stats = [
 const AdminHome: React.FC = () => {
   const navigate = useNavigate();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const userType = useAuthStore((state) => state.userType);
+  const userType = useAuthStore((state) => state.userRole);
   const token = useAuthStore((state) => state.token);
 
   const metadata = useAuthStore((state) => state.metadata);
@@ -102,11 +102,12 @@ const AdminHome: React.FC = () => {
 
       {/* Main content */}
       <div className="w-full flex flex-col flex-wrap gap-2 justify-between">
-        <div className="flex flex-wrap lg:flex-nowrap gap-2 w-full items-center">
+        <div className="flex flex-wrap lg:flex-wrap gap-2 w-full items-center">
           <AssessmentTable />
-          <OrganizationTable />
+          
         </div>
         <div className="flex flex-wrap lg:flex-nowrap gap-2 w-full items-center">
+        <OrganizationTable />
           <ReportsTable />
           <EmailsTable />
         </div>

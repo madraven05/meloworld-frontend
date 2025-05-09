@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TbMenu3 } from "react-icons/tb";
 import { IoClose } from "react-icons/io5";
 import { AnimatePresence, motion } from "framer-motion";
 import logo from "../../assets/logo-transparent.png";
+import { useAuthStore } from "../stores/auth-store";
 
 const Navbar: React.FC = () => {
-  const [navbarItems] = useState([
+  const { userRole, isAuthenticated, clearAuth } = useAuthStore();
+  const [navbarItems, setNavbarItems] = useState<{
+    name: string, link?: string, onClick?: () => void;
+  }[]>([
     { name: "Home", link: "#" },
     { name: "About", link: "#" },
     { name: "Services", link: "#" },
@@ -13,6 +17,28 @@ const Navbar: React.FC = () => {
   ]);
 
   const [showMenu, setShowMenu] = useState(false);
+
+  useEffect(() => {
+    switch (userRole) {
+      case "candidate":
+        if (isAuthenticated) {
+          setNavbarItems([
+            { name: "Home", link: "#" },
+            { name: "Logout", link: "#", onClick: clearAuth },
+          ]);
+        }
+        break;
+
+      default:
+        setNavbarItems([
+          { name: "Home", link: "#" },
+          { name: "About", link: "#" },
+          { name: "Services", link: "#" },
+          { name: "Contact", link: "#" },
+        ]);
+        break;
+    }
+  }, [userRole]);
 
   return (
     <div className="fixed top-0 w-full z-50">
@@ -24,7 +50,7 @@ const Navbar: React.FC = () => {
         </div>
         <div className="h-full flex justify-center items-center gap-5">
           {navbarItems.map((item, idx) => (
-            <a className="font-semibold" href={item.link} key={idx}>
+            <a onClick={item.onClick} className="font-semibold" href={item.link} key={idx}>
               {item.name}
             </a>
           ))}

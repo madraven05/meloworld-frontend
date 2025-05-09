@@ -4,14 +4,16 @@ import clsx from "clsx";
 interface CardProps {
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
 const Card: React.FC<CardProps> = ({
   children,
   className,
+  onClick = () => {}
 }) => {
   return (
-    <div className="relative overflow-hidden rounded-2xl shadow-lg">
+    <div className="relative w-full overflow-hidden rounded-2xl shadow-lg">
       <div className={clsx("relative z-10", className)}>
         {children}
       </div>

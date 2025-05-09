@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import homeImg from "../../assets/candidate-home-illustration.png";
 import Card from "../../components/ui/card/card";
-import suitcase from "../../assets/suitcase.png";
-import emotional from "../../assets/emotional.png";
+import suitcase from "../../assets/career.png";
+import peace from "../../assets/peace.png";
+
+import emotional from "../../assets/personality.png";
 import Button from "../../components/ui/button/button";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import InfiniteScrollGallery from "../../components/ui/infinity-scroll-gallery";
+import { PinContainer } from "../../components/ui/3d-pin";
+import { useAuthStore } from "../../components/stores/auth-store";
+import { getAllAssessments } from "../../services/assessments";
+import { Assessment } from "../../components/types";
 
 const assessmentsData = [
   {
@@ -22,7 +29,7 @@ const assessmentsData = [
   },
   {
     title: "Emotional and Social Intelligence",
-    imgSrc: emotional,
+    imgSrc: peace,
     description: "Your ability to manage emotions and social relationships",
     progress: "2/10",
   },
@@ -31,8 +38,31 @@ const assessmentsData = [
 const CandidateHome: React.FC = () => {
   const navigate = useNavigate();
 
+  const { token } = useAuthStore();
+  const [courseData, setCourseData] = useState<Assessment[]>([]);
+
+  useEffect(() => {
+    const fetchAssessments = async () => {
+      if (token) {
+        try {
+          const response = await getAllAssessments(token);
+          if (response?.ok) {
+            const data = await response.json();
+            // assume the payload is { courses: Assessment[] }
+            const courses: Assessment[] = data.courses ?? [];
+            console.log("fetched courses:", courses);
+            setCourseData(courses);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    };
+    fetchAssessments();
+  }, []);
+
   return (
-    <div className="relative candidate min-h-screen w-full overflow-x-hidden">
+    <div className="relative p-10 lg:py-20 lg:px-40 min-h-screen w-full overflow-x-hidden">
       {/* Hero Section */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-10 lg:gap-20">
         {/* Text Block */}
@@ -41,7 +71,8 @@ const CandidateHome: React.FC = () => {
             Choose an assessment
           </p>
           <p className="text-sm sm:text-base md:text-lg">
-            Discover yourself through assessments tailored to your personality, career aptitude, and emotional intelligence.
+            Discover yourself through assessments tailored to your personality,
+            career aptitude, and emotional intelligence.
           </p>
         </div>
 
@@ -57,7 +88,7 @@ const CandidateHome: React.FC = () => {
 
       {/* Assessment Cards */}
       <div className="flex flex-wrap gap-6 justify-center w-full mt-16 lg:mt-32 md:mt-20 lg:px-4">
-        {assessmentsData.map((a, idx) => (
+        {courseData.map((a, idx) => (
           <motion.div
             key={idx}
             initial={{ opacity: 0, scale: 0.95 }}
@@ -65,30 +96,34 @@ const CandidateHome: React.FC = () => {
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.4 }}
           >
-            <Card
-              withNoise
-              className="w-full border-2 border-primary/50 max-w-md bg-gradient-to-br from-secondary/10 to-secondary rounded-xl shadow-2xl flex flex-col sm:flex-row md:flex-col items-center text-sky-900 py-3 px-2"
+            <PinContainer
+              title="Progress"
+              // href="scales/2"
+              containerClassName="block w-full mx-auto" // outer hit‑area / layout
+              className="w-72 lg:w-96" // inner card wrapper
             >
-              <div className="flex flex-col sm:flex-row md:flex-col items-center justify-center gap-4 w-full p-4">
-                <img
-                  src={a.imgSrc}
-                  className="w-32 object-contain"
-                  alt={a.title}
-                />
-                <div className="flex flex-col gap-1 items-center sm:items-start md:items-center text-center sm:text-left md:text-center">
-                  <h2 className="text-lg font-semibold">{a.title}</h2>
-                  <p className="text-sm">{a.description}</p>
-                  <Button
-                    onClick={() => navigate(`scales/${idx}`)}
-                    className="mt-5"
-                    variant="outline"
-                    size="sm"
-                  >
-                    View More
-                  </Button>
+              <Card className="w-full border-primary/50 max-w-md bg-gradient-to-br from-secondary/10 to-secondary rounded-xl shadow-2xl flex flex-col sm:flex-row md:flex-col items-center text-sky-900 py-3 px-2">
+                <div className="flex flex-col sm:flex-row md:flex-col items-center justify-center gap-4 w-full p-4">
+                  <img
+                    src={emotional}
+                    className="w-32 object-contain"
+                    alt={a.title}
+                  />
+                  <div className="flex flex-col gap-1 items-center sm:items-start md:items-center text-center sm:text-left md:text-center">
+                    <h2 className="text-lg font-semibold">{a.title}</h2>
+                    <p className="text-sm">{a.description}</p>
+                    <Button
+                      onClick={() => navigate(`/candidate/scales/${a.id}`)}
+                      className="mt-5"
+                      variant="outline"
+                      size="sm"
+                    >
+                      View More
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </Card>
+              </Card>
+            </PinContainer>
           </motion.div>
         ))}
       </div>

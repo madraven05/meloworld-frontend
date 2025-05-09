@@ -51,3 +51,4 @@ td {
 .candidate {
     @apply bg-gradient-to-br from-[#ffffff] via-[#ffffff] to-[#efcbab] p-10 md:p-8 lg:py-10 lg:px-20;
 }
+
