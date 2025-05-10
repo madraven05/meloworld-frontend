@@ -10,9 +10,8 @@ interface QuestionCardProps {
 }
 
 const QuestionCard: React.FC<QuestionCardProps> = ({ question }) => {
-  console.log(question);
   const [showQuestionForm, setShowQuestionForm] = useState(false);
-
+  console.debug(showQuestionForm)
   return (
     <div className="relative bg-gradient-to-r from-sky-900 to-sky-900/70 rounded-xl shadow-lg text-secondary p-5 backdrop-blur-lg flex flex-col gap-2">
       <div className="flex justify-end mb-5">

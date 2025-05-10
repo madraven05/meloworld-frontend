@@ -58,7 +58,7 @@ const AddQuestionForm: React.FC<AddQuestionFormProps> = ({
   };
 
   const handleRemoveOption = (index: number) => {
-    const updated = formState.options.value.filter((_, i) => i !== index);
+    const updated = formState.options.value.filter((_: string, i: number) => i !== index);
     updateFormField("options", updated);
   };
 
@@ -111,7 +111,7 @@ const AddQuestionForm: React.FC<AddQuestionFormProps> = ({
         <Input
           id="question"
           required
-          size="sm"
+          inputSize="sm"
           placeholder="Add your question here"
           onChange={(e) => updateFormField("question", e.target.value)}
         />
@@ -131,7 +131,7 @@ const AddQuestionForm: React.FC<AddQuestionFormProps> = ({
             {(formState.options.value as string[]).map((option, idx) => (
               <div key={idx} className="flex items-center gap-2">
                 <Input
-                  size="sm"
+                  inputSize="sm"
                   placeholder={`Option ${idx + 1}`}
                   value={option}
                   onChange={(e) => handleOptionChange(idx, e.target.value)}

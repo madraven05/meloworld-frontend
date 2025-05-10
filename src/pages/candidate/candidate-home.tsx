@@ -1,39 +1,35 @@
 import React, { useEffect, useState } from "react";
 import homeImg from "../../assets/candidate-home-illustration.png";
 import Card from "../../components/ui/card/card";
-import suitcase from "../../assets/career.png";
-import peace from "../../assets/peace.png";
-
 import emotional from "../../assets/personality.png";
 import Button from "../../components/ui/button/button";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import InfiniteScrollGallery from "../../components/ui/infinity-scroll-gallery";
 import { PinContainer } from "../../components/ui/3d-pin";
 import { useAuthStore } from "../../components/stores/auth-store";
 import { getAllAssessments } from "../../services/assessments";
 import { Assessment } from "../../components/types";
 
-const assessmentsData = [
-  {
-    title: "Personality",
-    imgSrc: emotional,
-    description: "Personality traits, motivations, and behavioral tendencies",
-    progress: "2/10",
-  },
-  {
-    title: "Career",
-    imgSrc: suitcase,
-    description: "Suitability for job roles or help identify career paths",
-    progress: "2/10",
-  },
-  {
-    title: "Emotional and Social Intelligence",
-    imgSrc: peace,
-    description: "Your ability to manage emotions and social relationships",
-    progress: "2/10",
-  },
-];
+// const assessmentsData = [
+//   {
+//     title: "Personality",
+//     imgSrc: emotional,
+//     description: "Personality traits, motivations, and behavioral tendencies",
+//     progress: "2/10",
+//   },
+//   {
+//     title: "Career",
+//     imgSrc: suitcase,
+//     description: "Suitability for job roles or help identify career paths",
+//     progress: "2/10",
+//   },
+//   {
+//     title: "Emotional and Social Intelligence",
+//     imgSrc: peace,
+//     description: "Your ability to manage emotions and social relationships",
+//     progress: "2/10",
+//   },
+// ];
 
 const CandidateHome: React.FC = () => {
   const navigate = useNavigate();

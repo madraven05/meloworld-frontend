@@ -4,7 +4,6 @@ import { IoClose } from "react-icons/io5";
 import { AnimatePresence, motion } from "framer-motion";
 import logo from "../../assets/logo-transparent.png";
 import { useAuthStore } from "../stores/auth-store";
-import { useLocation } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const { userRole, isAuthenticated, clearAuth } = useAuthStore();

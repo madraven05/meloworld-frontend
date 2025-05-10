@@ -1,5 +1,4 @@
 // src/components/InputDropdown.stories.tsx
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FaUser } from 'react-icons/fa6';
 import InputDropdown from './input-dropdown';

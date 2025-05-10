@@ -1,5 +1,4 @@
 // src/components/Input.stories.tsx
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { FaSearch } from 'react-icons/fa';
 import Input from './input';
@@ -15,7 +14,7 @@ const meta: Meta<typeof Input> = {
       options: ['xs', 'sm', 'base', 'lg'],
       description: 'Font size for the input text',
     },
-    size: {
+    inputSize: {
       control: { type: 'radio' },
       options: ['xs', 'sm', 'md', 'lg'],
       description: 'Vertical padding & font size',
@@ -36,7 +35,7 @@ export const Default: Story = {
   args: {
     placeholder: 'Type something…',
     textSize: 'base',
-    size: 'md',
+    inputSize: 'md',
   },
 };
 
@@ -46,6 +45,6 @@ export const WithIcon: Story = {
     placeholder: 'Search…',
     icon: <FaSearch />,
     textSize: 'base',
-    size: 'md',
+    inputSize: 'md',
   },
 };

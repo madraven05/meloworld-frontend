@@ -6,7 +6,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Font,
 } from "@react-pdf/renderer";
 
 // (Optional) register a custom font
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
     borderColor: "#e1e4e8",
   },
   table: {
-    display: "table",
+    // display: "table",
     width: "100%",
     borderStyle: "solid",
     borderWidth: 1,

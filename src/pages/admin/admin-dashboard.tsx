@@ -1,7 +1,7 @@
 import React from "react";
 
 import DashboardSidebar from "../../components/ui/sidebar";
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const AdminDashboard: React.FC = () => {
   return (

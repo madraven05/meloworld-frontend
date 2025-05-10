@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Card from "../../../../components/ui/card/card";
-import { useAuthStore } from "../../../../components/stores/auth-store";
 import { Switch } from "@headlessui/react";
 import Table from "../../../../components/ui/table/table";
 import { FaArrowRight } from "react-icons/fa6";
@@ -8,10 +7,8 @@ import Button from "../../../../components/ui/button/button";
 
 
 const ReportsTable: React.FC = () => {
-  const token = useAuthStore((state) => state.token);
-
-  const [loading, setLoading] = useState(false);
-  const [organizations, setOrganizations] = useState<Record<string, any>[]>([
+  const [loading] = useState(false);
+  const [organizations] = useState<Record<string, any>[]>([
     {
       id: 1,
       name: "ABC Corporated",

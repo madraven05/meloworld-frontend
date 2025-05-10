@@ -6,7 +6,6 @@ import { FaWpforms } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { IoNotifications } from "react-icons/io5";
 import blankProfilePic from "../../../../assets/blank-profile-pic.webp";
-import dashboardImg from "../../../../assets/Work time-amico.png";
 import AssessmentTable from "./assessment-table";
 import OrganizationTable from "./organizations-table";
 import ReportsTable from "./reports-table";

@@ -1,5 +1,4 @@
 // src/components/Table.stories.tsx
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import Table from './table';
 
@@ -9,7 +8,7 @@ const meta: Meta<typeof Table> = {
   tags: ['autodocs'],
   argTypes: {
     headings: {
-      control: 'array',
+      control: 'object',
       description: 'Column headers for the table',
     },
   },
