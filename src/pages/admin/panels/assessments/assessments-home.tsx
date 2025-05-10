@@ -34,7 +34,7 @@ const AssessmentsHome: React.FC = () => {
     <>
       <h1>Assessments</h1>
 
-      <Card className="flex flex-col gap-10 w-full h-full p-10">
+      <Card className="flex flex-col gap-10 w-full h-full p-10 bg-white/60">
         <div className="flex w-full justify-between items-center">
           <Input
             size="sm"
