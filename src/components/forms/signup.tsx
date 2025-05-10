@@ -3,7 +3,7 @@ import Button from "../ui/button/button";
 import { IoKey, IoMail, IoPerson } from "react-icons/io5";
 import Input from "../ui/input/input";
 import { useNavigate } from "react-router-dom";
-import { adminSignup, signupService } from "../../services/auth";
+import { signupService } from "../../services/auth";
 import { UserRole } from "../types";
 import { useToast } from "../hooks/use-toast";
 

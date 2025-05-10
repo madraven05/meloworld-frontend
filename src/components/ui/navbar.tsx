@@ -40,6 +40,10 @@ const Navbar: React.FC = () => {
     }
   }, [userRole]);
 
+  if(window.location.pathname.includes("admin")) {
+    return null;
+  }
+
   return (
     <div className="fixed top-0 w-full z-50">
       {/* Desktop navbar (shown only in lg and md screens) */}

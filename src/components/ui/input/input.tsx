@@ -3,10 +3,10 @@ import React, { InputHTMLAttributes, ReactNode } from "react";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: ReactNode;
   textSize?: "xs" | "sm" | "base" | "lg";
-  size?: "xs" | "sm" | "md" | "lg";
+  inputSize?: "xs" | "sm" | "md" | "lg";
 }
 
-const sizeStyles: Record<NonNullable<InputProps["size"]>, string> = {
+const sizeStyles: Record<NonNullable<InputProps["inputSize"]>, string> = {
   xs: "py-1 text-xs",
   sm: "py-1.5 text-sm",
   md: "py-2 text-base",
@@ -16,7 +16,7 @@ const sizeStyles: Record<NonNullable<InputProps["size"]>, string> = {
 const Input: React.FC<InputProps> = ({
   icon,
   textSize = "base",
-  size = "md",
+  inputSize = "md" as keyof typeof sizeStyles,
   ...props
 }) => {
   const hasIcon = !!icon;
@@ -32,7 +32,7 @@ const Input: React.FC<InputProps> = ({
         className={`
           ${hasIcon ? "pl-10" : "pl-3"}
           pr-4
-          ${sizeStyles[size]}
+          ${sizeStyles[inputSize]}
           outline-1
           rounded-xl
           focus:outline-none

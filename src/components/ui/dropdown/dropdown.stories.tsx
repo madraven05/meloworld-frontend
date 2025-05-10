@@ -1,5 +1,4 @@
 // src/components/Dropdown.stories.tsx
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import Dropdown from './dropdown';
 

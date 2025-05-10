@@ -1,5 +1,4 @@
 // src/components/LikertScaleInput.stories.tsx
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import LikertScaleInput from './likert-scale-input';
 

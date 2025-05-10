@@ -1,5 +1,4 @@
 // src/components/Button.stories.tsx
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import Button from './button';
 
@@ -29,7 +28,6 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-// 📌 3) One or more “named exports” — actual stories
 export const Filled: Story = {
   args: {
     children: 'Primary Button',

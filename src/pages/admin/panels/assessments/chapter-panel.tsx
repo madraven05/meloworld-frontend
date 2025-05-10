@@ -86,10 +86,7 @@ const ChapterPanel: React.FC = () => {
         </div>
       </div>
       <p className="text-sm">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem maxime
-        dignissimos sunt sit minus animi doloribus expedita, quo nulla
-        assumenda, nesciunt numquam quis non quisquam in maiores corporis
-        laborum dolore.
+        {chapter?.description}
       </p>
       <div className="h-0.5 w-full bg-secondary" />
       <div className="relative w-full flex-col flex gap-2">

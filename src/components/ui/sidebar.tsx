@@ -7,6 +7,16 @@ import { FaChevronLeft, FaChevronRight, FaWpforms } from "react-icons/fa6";
 import { useAuthStore } from "../stores/auth-store";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./dialog/dialog";
+import Button from "./button/button";
 
 const DashboardSidebar: React.FC = () => {
   const clearAuth = useAuthStore((state) => state.clearAuth);
@@ -74,15 +84,32 @@ const DashboardSidebar: React.FC = () => {
             );
           })}
 
-          <div
-            onClick={clearAuth}
-            className="w-full no-underline hover:bg-secondary shadow-secondary hover:shadow-md hover:text-sky-900 p-2 rounded-xl transition duration-300 hover:translate-x-2 flex gap-2 items-center justify-start cursor-pointer"
-          >
-            <p>
-              <IoLogOut />
-            </p>
-            <p>Logout</p>
-          </div>
+          <Dialog>
+            <DialogTrigger asChild>
+              <div className="w-full no-underline hover:bg-secondary shadow-secondary hover:shadow-md hover:text-sky-900 p-2 rounded-xl transition duration-300 hover:translate-x-2 flex gap-2 items-center justify-start cursor-pointer">
+                <p>
+                  <IoLogOut />
+                </p>
+                <p>Logout</p>
+              </div>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Confirm Logout</DialogTitle>
+                <DialogDescription>
+                  Are you sure you want to logout?
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button onClick={clearAuth} size="sm">
+                  Logout
+                </Button>
+                <Button size="sm" variant="outline">
+                  Cancel
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
@@ -133,15 +160,32 @@ const DashboardSidebar: React.FC = () => {
                 );
               })}
 
-              <div
-                onClick={clearAuth}
-                className="w-full no-underline hover:bg-secondary shadow-secondary hover:shadow-md hover:text-sky-900 p-2 rounded-xl transition duration-300 hover:translate-x-2 flex gap-2 items-center justify-start cursor-pointer"
-              >
-                <p>
-                  <IoLogOut />
-                </p>
-                <p>Logout</p>
-              </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <div className="w-full no-underline hover:bg-secondary shadow-secondary hover:shadow-md hover:text-sky-900 p-2 rounded-xl transition duration-300 hover:translate-x-2 flex gap-2 items-center justify-start cursor-pointer">
+                    <p>
+                      <IoLogOut />
+                    </p>
+                    <p>Logout</p>
+                  </div>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Confirm Logout</DialogTitle>
+                    <DialogDescription>
+                      Are you sure you want to logout?
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter>
+                    <Button onClick={clearAuth} size="sm">
+                      Logout
+                    </Button>
+                    <Button size="sm" variant="outline">
+                      Cancel
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
           </motion.div>
         )}

@@ -50,7 +50,7 @@ const AssessmentDropdownRow: React.FC<AssessmentDropdownRowProps> = ({
                   <Card
                     
                     key={id}
-                    className={`flex relative flex-col h-40 gap-2 shadow-md items-center rounded-xl border-gray-2 py-2 px-6 w-40 lg:w-full justify-center`}
+                    className={`flex bg-white relative flex-col h-40 gap-2 shadow-md items-center rounded-xl border-gray-2 py-2 px-6 w-40 lg:w-full justify-center`}
                   >
                     <img
                       src={chapterImg}
@@ -61,7 +61,7 @@ const AssessmentDropdownRow: React.FC<AssessmentDropdownRowProps> = ({
                   </Card>
                 ))}
                 <Card
-                    className={`flex relative flex-col h-40 gap-2 shadow-md items-center rounded-xl border-gray-2 py-2 px-6 w-40 lg:w-full justify-center`}
+                    className={`flex relative bg-white flex-col h-40 gap-2 shadow-md items-center rounded-xl border-gray-2 py-2 px-6 w-40 lg:w-full justify-center`}
                   >
                     <h3 className="font-semibold">Add new chapter</h3>
                     <Button variant="outline" size="xs">Add chapter</Button>

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { PDFViewer, PDFDownloadLink } from "@react-pdf/renderer";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import LikertScaleInput from "../../components/ui/input/likert-scale-input";
 import Button from "../../components/ui/button/button";
-import background from "../../assets/form/backgroundColorFall.png";
 import Experience from "./scene/Experience";
 import { motion } from "framer-motion";
 import Report, { ReportProps } from "./report";

@@ -1,11 +1,6 @@
 import React, { ReactNode } from "react";
-import Input from "../../components/ui/input/input";
-import { IoLockClosed, IoPerson } from "react-icons/io5";
-import Button from "../../components/ui/button/button";
 import { motion } from "framer-motion";
 import logo from "../../assets/logo-white.png";
-import Navbar from "../../components/ui/navbar";
-import waveImg from "../../assets/login-wave.png";
 
 
 interface LayoutProps {

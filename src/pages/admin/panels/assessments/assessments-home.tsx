@@ -7,7 +7,6 @@ import { useAuthStore } from "../../../../components/stores/auth-store";
 import { Assessment } from "../../../../components/types";
 import AssessmentDropdownRow from "./assessment-dropdown-row";
 import { getAllAssessments } from "../../../../services/assessments";
-import { IoFilter } from "react-icons/io5";
 import Button from "../../../../components/ui/button/button";
 import { FaFilter, FaSort } from "react-icons/fa6";
 
@@ -34,10 +33,10 @@ const AssessmentsHome: React.FC = () => {
     <>
       <h1>Assessments</h1>
 
-      <Card className="flex flex-col gap-10 w-full h-full p-10">
+      <Card className="flex flex-col gap-10 w-full h-full p-10 bg-white/60">
         <div className="flex w-full justify-between items-center">
           <Input
-            size="sm"
+            inputSize="sm"
             textSize="xs"
             placeholder="Search Assessments"
             icon={<FaSearch />}
