@@ -1,3 +1,3 @@
 # Meloworld Frontend
 
-Made using React, Vite, Tailwind, and Framer Motion
+Made using React TS, Vite, Tailwind, and Framer Motion
