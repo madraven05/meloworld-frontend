@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
   const [navbarItems, setNavbarItems] = useState<{
     name: string, link?: string, onClick?: () => void;
   }[]>([
-    { name: "Home", link: "#" },
+    { name: "Home", link: "/" },
     { name: "About", link: "#" },
     { name: "Services", link: "#" },
     { name: "Contact", link: "#" },
@@ -24,14 +24,14 @@ const Navbar: React.FC = () => {
         if (token) {
           setNavbarItems([
             { name: "Home", link: "#" },
-            { name: "Logout", link: "#", onClick: clearAuth },
+            { name: "Logout", onClick: clearAuth },
           ]);
         }
         break;
 
       default:
         setNavbarItems([
-          { name: "Home", link: "#" },
+          { name: "Home", link: "/" },
           { name: "About", link: "#" },
           { name: "Services", link: "#" },
           { name: "Contact", link: "#" },
