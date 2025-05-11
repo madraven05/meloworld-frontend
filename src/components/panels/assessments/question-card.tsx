@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Card from "../../../../src/components/ui/card/card";
-import { Question } from "../../../../src/components/types";
-import Button from "../../../../src/components/ui/button/button";
+import Card from "../../ui/card/card";
+import { Question } from "../../types";
+import Button from "../../ui/button/button";
 import { FiEdit3 } from "react-icons/fi";
-import LikertScaleInput from "../../../../src/components/ui/input/likert-scale-input";
+import LikertScaleInput from "../../ui/input/likert-scale-input";
 
 interface QuestionCardProps {
   question: Question;

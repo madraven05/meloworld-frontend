@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Card from "../../../../src/components/ui/card/card";
+import Card from "../../ui/card/card";
 import { Switch } from "@headlessui/react";
-import Table from "../../../../src/components/ui/table/table";
+import Table from "../../ui/table/table";
 import { FaArrowRight } from "react-icons/fa6";
-import Button from "../../../../src/components/ui/button/button";
+import Button from "../../ui/button/button";
 
 
 const EmailsTable: React.FC = () => {

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import DropdownRow from "../../../../src/components/ui/table/dropdown-row";
-import { useAuthStore } from "../../../../src/components/stores/auth-store";
-import { Chapter } from "../../../../src/components/types";
-import Button from "../../../../src/components/ui/button/button";
+import DropdownRow from "../../ui/table/dropdown-row";
+import { useAuthStore } from "../../stores/auth-store";
+import { Chapter } from "../../types";
+import Button from "../../ui/button/button";
 import chapterImg from "@/assets/admin-login.png";
-import Card from "../../../../src/components/ui/card/card";
-import { getAllChapters } from "../../../../src/services/chapters";
+import Card from "../../ui/card/card";
+import { getAllChapters } from "../../../services/chapters";
 
 interface AssessmentDropdownRowProps {
   assessmentId: number;

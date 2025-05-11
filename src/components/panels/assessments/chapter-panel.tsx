@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Button from "../../../../src/components/ui/button/button";
+import Button from "../../ui/button/button";
 import { FaAngleLeft, FaPlus } from "react-icons/fa6";
-import { useAuthStore } from "../../../../src/components/stores/auth-store";
-import { getChapterById } from "../../../../src/services/chapters";
-import { Chapter, Quiz } from "../../../../src/components/types";
-import Dropdown from "../../../../src/components/ui/dropdown/dropdown";
-import { getAllQuizzesByChapter } from "../../../../src/services/quizzes";
+import { useAuthStore } from "../../stores/auth-store";
+import { getChapterById } from "../../../services/chapters";
+import { Chapter, Quiz } from "../../types";
+import Dropdown from "../../ui/dropdown/dropdown";
+import { getAllQuizzesByChapter } from "../../../services/quizzes";
 import QuestionCard from "./question-card";
-import AddQuestionForm from "../../../../src/components/forms/add-question";
+import AddQuestionForm from "../../forms/add-question";
 import { AnimatePresence, motion } from "framer-motion";
 
 const ChapterPanel: React.FC = () => {

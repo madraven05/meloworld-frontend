@@ -8,7 +8,7 @@ interface AuthLayoutProps {
   children?: ReactNode;
 }
 
-export const AuthLayout: React.FC<AuthLayoutProps> = ({ imgSrc, children }) => {
+const AuthLayout: React.FC<AuthLayoutProps> = ({ imgSrc, children }) => {
   return (
     <>
       {/* <motion.img
@@ -98,3 +98,5 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({ imgSrc, children }) => {
     </>
   );
 };
+
+export default AuthLayout;

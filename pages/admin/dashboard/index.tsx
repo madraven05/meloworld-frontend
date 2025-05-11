@@ -1,5 +1,5 @@
 // pages/admin/dashboard/home.tsx
-import AdminHome from "../panels/home/admin-home"; // or wherever your component lives
+import AdminHome from "../../../src/components/panels/home/admin-home"; // or wherever your component lives
 import AdminLayout from "../admin-layout";
 import ProtectedRoute from "@/components/protected-route";
 

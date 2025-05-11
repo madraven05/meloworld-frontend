@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Card from "../../../../src/components/ui/card/card";
-import Input from "../../../../src/components/ui/input/input";
+import Card from "../../ui/card/card";
+import Input from "../../ui/input/input";
 import { FaSearch } from "react-icons/fa";
-import Table from "../../../../src/components/ui/table/table";
-import { useAuthStore } from "../../../../src/components/stores/auth-store";
-import { Assessment } from "../../../../src/components/types";
+import Table from "../../ui/table/table";
+import { useAuthStore } from "../../stores/auth-store";
+import { Assessment } from "../../types";
 import AssessmentDropdownRow from "./assessment-dropdown-row";
-import { getAllAssessments } from "../../../../src/services/assessments";
-import Button from "../../../../src/components/ui/button/button";
+import { getAllAssessments } from "../../../services/assessments";
+import Button from "../../ui/button/button";
 import { FaFilter, FaSort } from "react-icons/fa6";
 
 const AssessmentsHome: React.FC = () => {

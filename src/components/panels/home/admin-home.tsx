@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useAuthStore } from "../../../../src/components/stores/auth-store";
+import { useAuthStore } from "../../stores/auth-store";
 import { PiBuildingApartmentFill } from "react-icons/pi";
 import { IoPeople } from "react-icons/io5";
 import { FaWpforms } from "react-icons/fa";

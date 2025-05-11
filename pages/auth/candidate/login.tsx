@@ -1,5 +1,5 @@
 import React from 'react'
-import { AuthLayout } from '../layout'
+import AuthLayout from '../layout'
 import LoginForm from 'src/components/forms/login'
 
 const AdminLogin = () => {

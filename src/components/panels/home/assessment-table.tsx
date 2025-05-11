@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Card from "../../../../src/components/ui/card/card";
-import Table from "../../../../src/components/ui/table/table";
-import Button from "../../../../src/components/ui/button/button";
+import Card from "../../ui/card/card";
+import Table from "../../ui/table/table";
+import Button from "../../ui/button/button";
 import { FaArrowRight } from "react-icons/fa";
 // import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../../../src/components/stores/auth-store";
-import { getAllAssessments } from "../../../../src/services/assessments";
-import { Assessment } from "../../../../src/components/types";
+import { useAuthStore } from "../../stores/auth-store";
+import { getAllAssessments } from "../../../services/assessments";
+import { Assessment } from "../../types";
 
 const AssessmentTable: React.FC = () => {
   const token = useAuthStore((state) => state.token);
