@@ -1,0 +1,41 @@
+{
+  "name": "converted-nextjs-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.2",
+    "@react-three/drei": "^10.0.7",
+    "@react-three/fiber": "^9.1.2",
+    "@tailwindcss/postcss": "^4.1.6",
+    "aws4fetch": "^1.0.20",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.10.5",
+    "headlessui": "^0.0.0",
+    "motion": "^12.10.5",
+    "next": "latest",
+    "postcss": "^8.5.3",
+    "radix-ui": "^1.4.1",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-icons": "^5.5.0",
+    "tailwind-merge": "^3.2.0",
+    "tailwindcss": "^4.1.6",
+    "three": "^0.176.0",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.6.12",
+    "@storybook/react": "^8.6.12",
+    "@storybook/react-webpack5": "^8.6.12",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/storybook__react": "^4.0.2",
+    "typescript": "latest",
+    "zustand": "^5.0.4"
+  }
+}
