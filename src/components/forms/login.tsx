@@ -200,7 +200,7 @@ const LoginForm: React.FC<LoginProps> = ({ userRole }) => {
       </form>
       <p className="text-sm mt-4 text-center">
         Don't have an account?{" "}
-        <Link href="/admin/signup" className="font-semibold hover:underline">
+        <Link href={`/auth/${userRole}/signup`} className="font-semibold hover:underline">
           Sign up
         </Link>
       </p>
