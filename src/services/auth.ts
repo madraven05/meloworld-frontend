@@ -1,9 +1,9 @@
 import { signAndRequest } from "../lib/aws-axios";
 
 const userTypeHost: { [type: string]: string } = {
-  admin: process.env.NEXT_PUBLIC_AWS_ADMIN_HOST,
-  org: process.env.NEXT_PUBLIC_AWS_ADMIN_HOST,
-  candidate: process.env.NEXT_PUBLIC_AWS_CANDIDATE_HOST,
+  admin: process.env.NEXT_PUBLIC_AWS_ADMIN_HOST as string,
+  org: process.env.NEXT_PUBLIC_AWS_ADMIN_HOST as string,
+  candidate: process.env.NEXT_PUBLIC_AWS_CANDIDATE_HOST as string,
 };
 
 export const signupService = {

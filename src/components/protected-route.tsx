@@ -1,5 +1,6 @@
-// components/ProtectedRoute.tsx
-import { useRouter } from "next/router";
+"use client";
+
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, ReactNode } from "react";
 import { useAuthStore } from "./stores/auth-store";
 
@@ -11,6 +12,7 @@ interface ProtectedRouteProps {
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const { token, userRole, hydrated } = useAuthStore();
 
   const getTargetRole = (path: string): Role | undefined => {
@@ -20,7 +22,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     return undefined;
   };
 
-  const targetRole = getTargetRole(router.pathname);
+  const targetRole = getTargetRole(pathname);
 
   /** helper: login route for a role */
   const loginPath = (role?: Role) =>

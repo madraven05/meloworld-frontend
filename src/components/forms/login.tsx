@@ -1,3 +1,5 @@
+"use client";
+
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Button from "../ui/button/button";
 import { IoKey, IoMail } from "react-icons/io5";
@@ -8,7 +10,7 @@ import { useAuthStore } from "../stores/auth-store";
 import { UserRole } from "../types";
 import { useToast } from "../hooks/use-toast";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface LoginProps {
   userRole: UserRole;

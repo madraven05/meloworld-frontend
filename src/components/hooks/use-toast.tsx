@@ -1,3 +1,5 @@
+"use client";
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import * as RadixToast from '@radix-ui/react-toast';
 import { v4 as uuidv4 } from 'uuid';
