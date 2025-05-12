@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import Card from "../../ui/card/card";
 import Table from "../../ui/table/table";
@@ -7,10 +8,11 @@ import { FaArrowRight } from "react-icons/fa";
 import { useAuthStore } from "../../stores/auth-store";
 import { getAllAssessments } from "../../../services/assessments";
 import { Assessment } from "../../types";
+import { useRouter } from "next/navigation";
 
 const AssessmentTable: React.FC = () => {
   const token = useAuthStore((state) => state.token);
-
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [assessments, setAssessments] = useState<Assessment[]>([]);
 
@@ -38,7 +40,8 @@ const AssessmentTable: React.FC = () => {
       <div className="flex w-full justify-between items-center">
         <h2>Assessments</h2>
         <Button
-          // onClick={() => navigate("/admin/dashboard/assessments")}
+          variant="outline"
+          onClick={() => router.push("/admin/assessments")}
           size="xs"
           className="flex gap-2 items-center"
         >

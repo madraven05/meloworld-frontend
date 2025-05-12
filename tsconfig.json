@@ -7,7 +7,9 @@
       "esnext"
     ],
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ]
     },
     "allowJs": true,
     "skipLibCheck": true,
@@ -21,12 +23,23 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "baseUrl": ".",
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "strictNullChecks": true
   },
   "include": [
+    "app",
+    "app/admin",
+    "app/auth",
+    "app/candidate",
     "next-env.d.ts",
+    "pages",
     "src",
-    "pages"
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

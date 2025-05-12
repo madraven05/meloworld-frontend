@@ -1,14 +1,16 @@
+"use client";
+
 import React from "react";
-import { useAuthStore } from "../../stores/auth-store";
 import { PiBuildingApartmentFill } from "react-icons/pi";
 import { IoPeople } from "react-icons/io5";
 import { FaWpforms } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
 import blankProfilePic from "@/assets/blank-profile-pic.webp";
-import AssessmentTable from "./assessment-table";
-import OrganizationTable from "./organizations-table";
-import ReportsTable from "./reports-table";
-import EmailsTable from "./emails-table";
+import { useAuthStore } from "@/components/stores/auth-store";
+import AssessmentTable from "@/components/panels/home/assessment-table";
+import OrganizationTable from "@/components/panels/home/organizations-table";
+import ReportsTable from "@/components/panels/home/reports-table";
+import EmailsTable from "@/components/panels/home/emails-table";
 
 const stats = [
   {
@@ -33,7 +35,7 @@ const stats = [
   },
 ];
 
-const AdminHome: React.FC = () => {
+const AdminDashboardPage: React.FC = () => {
   const metadata = useAuthStore((state) => state.metadata);
 
   return (
@@ -93,4 +95,4 @@ const AdminHome: React.FC = () => {
   );
 };
 
-export default AdminHome;
+export default AdminDashboardPage;

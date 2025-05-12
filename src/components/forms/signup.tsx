@@ -1,3 +1,5 @@
+"use client";
+
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import Button from "../ui/button/button";
 import { IoKey, IoMail, IoPerson } from "react-icons/io5";
@@ -5,7 +7,7 @@ import Input from "../ui/input/input";
 import { signupService } from "../../services/auth";
 import { UserRole } from "../types";
 import { useToast } from "../hooks/use-toast";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export type FormState = { [key: string]: { value: any; error: string } };
 
