@@ -1,14 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Card from "../../ui/card/card";
-import Table from "../../ui/table/table";
-import Button from "../../ui/button/button";
 import { FaArrowRight } from "react-icons/fa";
 // import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../stores/auth-store";
-import { getAllAssessments } from "../../../services/assessments";
-import { Assessment } from "../../types";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/components/stores/auth-store";
+import { Assessment } from "@/components/types";
+import { getAllAssessments } from "@/services/assessments";
+import Card from "@/components/ui/card/card";
+import Button from "@/components/ui/button/button";
+import Table from "@/components/ui/table/table";
 
 const AssessmentTable: React.FC = () => {
   const token = useAuthStore((state) => state.token);

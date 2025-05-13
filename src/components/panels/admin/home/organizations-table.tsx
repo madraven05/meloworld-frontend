@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import Card from "../../ui/card/card";
 import { Switch } from "@headlessui/react";
-import Table from "../../ui/table/table";
 import { FaArrowRight } from "react-icons/fa6";
-import Button from "../../ui/button/button";
+import Card from "@/components/ui/card/card";
+import Button from "@/components/ui/button/button";
+import Table from "@/components/ui/table/table";
 
 
-const ReportsTable: React.FC = () => {
+const OrganizationTable: React.FC = () => {
   const [loading] = useState(false);
   const [organizations] = useState<Record<string, any>[]>([
     {
@@ -61,7 +61,7 @@ const ReportsTable: React.FC = () => {
   return (
     <Card className="flex bg-white flex-col items-start gap-5 p-5 justify-start w-full h-96">
       <div className="flex w-full justify-between items-center">
-        <h2>Reports</h2>
+        <h2>Organizations</h2>
         <Button size="xs" className="flex gap-2 items-center">
             View More
             <FaArrowRight/>
@@ -105,4 +105,4 @@ const ReportsTable: React.FC = () => {
   );
 };
 
-export default ReportsTable;
+export default OrganizationTable;
