@@ -19,8 +19,7 @@ export default function Home() {
           Candidate
         </Button>
         <Button
-          // onClick={() => router.push("/auth/candidate/login")}
-          disabled
+          onClick={() => router.push("/org/dashboard")}
           variant="outline"
           size="xs"
         >
