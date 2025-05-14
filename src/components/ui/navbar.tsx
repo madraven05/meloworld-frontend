@@ -35,17 +35,16 @@ const Navbar: React.FC = () => {
         }
         break;
 
+        case "org":
+          setHidden(true);
+          break;
+
       case "admin":
         setHidden(true);
         break;
 
       default:
-        setNavbarItems([
-          { name: "Home", link: "/" },
-          { name: "About", link: "#" },
-          { name: "Services", link: "#" },
-          { name: "Contact", link: "#" },
-        ]);
+        setHidden(true);
         break;
     }
   }, [userRole]);

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import logoTransparent from "@/assets/logo-transparent.png";
 import { GoHomeFill } from "react-icons/go";
 import { PiBuildingApartmentFill } from "react-icons/pi";
@@ -21,42 +21,24 @@ import Button from "./button/button";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
-const DashboardSidebar: React.FC = () => {
+interface MenuItem {
+  title: string,
+  to: string,
+  icon: ReactNode
+}
+
+interface DashboardSidebarProps {
+  menuItems: MenuItem[],
+  title: string
+}
+
+const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
+  menuItems = [],
+  title
+}) => {
   const clearAuth = useAuthStore((state) => state.clearAuth);
   const router = useRouter();
   const pathname = usePathname();
-  const menuItems = [
-    {
-      title: "Dashboard",
-      to: "/admin/dashboard/",
-      icon: <GoHomeFill />,
-    },
-    {
-      title: "Assessments",
-      to: "/admin/assessments",
-      icon: <FaWpforms />,
-    },
-    {
-      title: "Organizations",
-      to: "/admin/organizations",
-      icon: <PiBuildingApartmentFill />,
-    },
-    {
-      title: "Candidates",
-      to: "/admin/candidates",
-      icon: <IoPeople />,
-    },
-    {
-      title: "Email Management",
-      to: "/admin/email",
-      icon: <PiBuildingApartmentFill />,
-    },
-    {
-      title: "Settings",
-      to: "/admin/settings",
-      icon: <PiBuildingApartmentFill />,
-    },
-  ];
 
   const [expandMobileMenu, setExpandMobileMenu] = useState(false);
 
@@ -66,7 +48,7 @@ const DashboardSidebar: React.FC = () => {
       <aside className="w-1/5 h-screen sticky top-0 bg-sky-900 hidden lg:block backdrop-blur-lg shadow-2xl z-100">
         <div className="flex gap-1 justify-center border-b-2 border-secondary rounded-b-xl items-center">
           <img className="w-20 -ml-3 mt-2" src={logoTransparent.src} />
-          <h2 className="text-primary mt-3">Admin Portal</h2>
+          <h2 className="text-primary mt-3">{title} Portal</h2>
         </div>
         <div className="w-full flex flex-col px-4 mt-10 gap-5 items-center text-secondary">
           {menuItems.map((item, idx) => {

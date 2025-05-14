@@ -8,7 +8,7 @@ interface TableProps {
 const Table: React.FC<TableProps> = ({ headings, children }) => {
   return (
     <div className="w-full overflow-x-auto">
-      <table className="w-full border-y-2 border-gray-200">
+      <table className="lg:table-fixed w-full border-y-2 border-gray-200">
         <thead>
           <tr>
             {headings.map((header, id) => (

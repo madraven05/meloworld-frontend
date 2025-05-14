@@ -64,6 +64,10 @@ const Button: React.FC<ButtonProps> = ({
       className={`
         ${sizeMap[size]}
         relative
+        flex gap-2
+        justify-center
+        items-center
+        text-${size}
         overflow-hidden
         px-2 lg:px-5 py-2
         font-semibold

@@ -7,10 +7,10 @@ import { FaWpforms } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
 import blankProfilePic from "@/assets/blank-profile-pic.webp";
 import { useAuthStore } from "@/components/stores/auth-store";
-import AssessmentTable from "@/components/panels/home/assessment-table";
-import OrganizationTable from "@/components/panels/home/organizations-table";
-import ReportsTable from "@/components/panels/home/reports-table";
-import EmailsTable from "@/components/panels/home/emails-table";
+import AssessmentTable from "@/components/panels/admin/home/assessment-table";
+import OrganizationTable from "@/components/panels/admin/home/organizations-table";
+import ReportsTable from "@/components/panels/admin/home/reports-table";
+import EmailsTable from "@/components/panels/admin/home/emails-table";
 
 const stats = [
   {
