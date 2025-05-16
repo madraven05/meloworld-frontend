@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import DropdownRow from "../../../ui/table/dropdown-row";
 import { useAuthStore } from "../../../stores/auth-store";
@@ -6,6 +8,7 @@ import Button from "../../../ui/button/button";
 import chapterImg from "@/assets/admin-login.png";
 import Card from "../../../ui/card/card";
 import { getAllChapters } from "../../../../services/chapters";
+import { useRouter } from "next/navigation";
 
 interface AssessmentDropdownRowProps {
   assessmentId: number;
@@ -23,6 +26,7 @@ const AssessmentDropdownRow: React.FC<AssessmentDropdownRowProps> = ({
   updatedAt,
 }) => {
   const { token } = useAuthStore();
+  const router = useRouter();
   const [chapters, setChapters] = useState<Chapter[]>([]);
 
   const toggleOpen = async (open: boolean) => {
@@ -55,7 +59,7 @@ const AssessmentDropdownRow: React.FC<AssessmentDropdownRowProps> = ({
                       className="absolute w-40 opacity-20"
                     />
                     <h3 className="w-full text-center font-semibold">{c.title}</h3>
-                    <Button onClick={() => {}} size="xs">View More</Button>
+                    <Button onClick={() => router.push(`/admin/assessments/${c.course_id}/${c.id}`)} size="xs">View More</Button>
                   </Card>
                 ))}
                 <Card

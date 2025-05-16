@@ -6,7 +6,7 @@ import Button from "../ui/button/button";
 import InputDropdown from "../ui/dropdown/input-dropdown";
 import LikertScaleInput from "../ui/input/likert-scale-input";
 import { FormState } from "./signup";
-import { Quiz } from "../types";
+import { Question, Quiz } from "../types";
 import { updateQuiz } from "../../services/quizzes";
 import { useAuthStore } from "../stores/auth-store";
 
@@ -14,23 +14,26 @@ interface AddQuestionFormProps {
   onClose: () => void;
   chapterId?: number;
   quiz?: Quiz;
-  type?: string;
-  initialOptions?: string[];
+  question?: Question;
 }
 
 const AddQuestionForm: React.FC<AddQuestionFormProps> = ({
   onClose = () => {},
-  type = "Single-Choice",
-  initialOptions = [],
   chapterId,
+  question = {
+    answer: "",
+    options: [],
+    question: "",
+    type: "single"
+  },
   quiz,
 }) => {
   const { token } = useAuthStore();
   const [formState, setFormState] = useState<FormState>({
-    type: { value: type, error: "" },
-    question: { value: "", error: "" },
-    options: { value: initialOptions, error: "" },
-    answer: { value: "", error: "" },
+    type: { value: question.type, error: "" },
+    question: { value: question.question, error: "" },
+    options: { value: question.options, error: "" },
+    answer: { value: question.answer, error: "" },
   });
 
   const updateFormField = <K extends keyof FormState>(
@@ -91,15 +94,19 @@ const AddQuestionForm: React.FC<AddQuestionFormProps> = ({
     }
   };
 
+  if(question.type) {
+
+  }
+
   return (
     <form
       onSubmit={handleFormSubmit}
-      className="h-full pb-15 px-2 overflow-auto flex flex-col w-full gap-5"
+      className="h-full pb-15 px-2 text-sky-900 overflow-auto flex flex-col w-full gap-5"
     >
       <InputDropdown
         visualSize="sm"
         label="Question Type"
-        options={["Multi-choice", "Likert Scale", "Single correct"]}
+        options={["multiple", "likert", "single"]}
         value={formState.type.value}
         onChange={(e) => updateFormField("type", e.target.value)}
       />
@@ -110,6 +117,7 @@ const AddQuestionForm: React.FC<AddQuestionFormProps> = ({
         </label>
         <Input
           id="question"
+          value={question.question}
           required
           inputSize="sm"
           placeholder="Add your question here"
@@ -120,7 +128,7 @@ const AddQuestionForm: React.FC<AddQuestionFormProps> = ({
       <Fieldset className="w-full flex flex-col gap-2">
         <label className="font-semibold">Options</label>
 
-        {formState.type.value === "Likert Scale" ? (
+        {formState.type.value === "likert" ? (
           <LikertScaleInput
             name="likert-response"
             value={formState.answer.value}

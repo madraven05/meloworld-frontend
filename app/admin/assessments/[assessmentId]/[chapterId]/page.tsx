@@ -1,22 +1,22 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
-import Button from "../../../ui/button/button";
 import { FaAngleLeft, FaPlus } from "react-icons/fa6";
-import { useAuthStore } from "../../../stores/auth-store";
-import { getChapterById } from "../../../../services/chapters";
-import { Chapter, Quiz } from "../../../types";
-import Dropdown from "../../../ui/dropdown/dropdown";
-import { getAllQuizzesByChapter } from "../../../../services/quizzes";
-import QuestionCard from "./question-card";
-import AddQuestionForm from "../../../forms/add-question";
 import { AnimatePresence, motion } from "framer-motion";
+import { useAuthStore } from "@/components/stores/auth-store";
+import { Chapter, Quiz } from "@/components/types";
+import { getChapterById } from "@/services/chapters";
+import { getAllQuizzesByChapter } from "@/services/quizzes";
+import Button from "@/components/ui/button/button";
+import Dropdown from "@/components/ui/dropdown/dropdown";
+import QuestionCard from "@/components/panels/admin/assessments/question-card";
+import AddQuestionForm from "@/components/forms/add-question";
+import { useParams, useRouter } from "next/navigation";
 
 const ChapterPanel: React.FC = () => {
+  const router = useRouter();
   const token = useAuthStore((state) => state.token);
-  const { assessmentId, chapterId } = {
-    assessmentId: 0,
-    chapterId: 1
-  }
-
+  const { assessmentId, chapterId } = useParams();
   const [chapter, setChapter] = useState<Chapter | null>();
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [showQuestionForm, setShowQuestionForm] = useState<{
@@ -59,9 +59,9 @@ const ChapterPanel: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative h-full w-full flex flex-col gap-5 items-start justify-start">
+    <div className="dashboard-panel relative h-full w-full flex flex-col gap-5 items-start justify-start">
       <Button
-        onClick={() => {}}
+        onClick={() => router.push("/admin/assessments")}
         size="xs"
         className="flex gap-2 items-center justify-center mb-5"
       >
@@ -94,7 +94,7 @@ const ChapterPanel: React.FC = () => {
             <Dropdown title={quiz.title} key={idx}>
               <div className="flex flex-col gap-3">
                 {quiz.questions.map((ques, id) => (
-                  <QuestionCard question={ques} key={id} />
+                  <QuestionCard quiz={quiz} question={ques} key={id} />
                 ))}
                 <div className="lg:w-full flex items-center justify-center">
                   <Button
@@ -121,7 +121,7 @@ const ChapterPanel: React.FC = () => {
             exit={{ x: "100%", opacity: 0 }}
             className="fixed p-10 right-0 top-0 h-full w-full lg:w-1/2 bg-secondary shadow-xl"
           >
-            <div className="absolute top-0 left-0 text-secondary py-5 px-12 w-full bg-sky-900">
+            <div className="absolute top-0 left-0 text-sky-900 py-5 px-12 w-full">
               <h1>Add Question</h1>
             </div>
             <div className="w-full h-full mt-14">

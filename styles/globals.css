@@ -24,10 +24,6 @@ h3 {
     @apply text-sm lg:text-base font-poppins font-semibold;
 }
 
-p {
-    @apply text-sm;
-}
-
 a {
     @apply hover:cursor-pointer;
 }
