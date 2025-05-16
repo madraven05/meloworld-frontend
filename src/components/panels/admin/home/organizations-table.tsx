@@ -6,9 +6,11 @@ import { FaArrowRight } from "react-icons/fa6";
 import Card from "@/components/ui/card/card";
 import Button from "@/components/ui/button/button";
 import Table from "@/components/ui/table/table";
+import { useRouter } from "next/navigation";
 
 
 const OrganizationTable: React.FC = () => {
+  const router = useRouter();
   const [loading] = useState(false);
   const [organizations] = useState<Record<string, any>[]>([
     {
@@ -59,10 +61,10 @@ const OrganizationTable: React.FC = () => {
   const headings = ["Name", "Candidates", "Status"];
 
   return (
-    <Card className="flex bg-white flex-col items-start gap-5 p-5 justify-start w-full h-96">
+    <Card className="flex bg-white/60 flex-col items-start gap-5 p-5 justify-start w-full h-96">
       <div className="flex w-full justify-between items-center">
         <h2>Organizations</h2>
-        <Button size="xs" className="flex gap-2 items-center">
+        <Button variant="outline" onClick={() => router.push("/admin/organizations")} size="xs" className="flex gap-2 items-center">
             View More
             <FaArrowRight/>
         </Button>

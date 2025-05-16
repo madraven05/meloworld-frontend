@@ -44,11 +44,11 @@ const AssessmentsHome: React.FC = () => {
             icon={<FaSearch />}
           />
           <div className="flex gap-2">
-            <Button size="xs" className="flex gap-2">
+            <Button variant="outline" size="xs" className="flex gap-2">
               <FaSort />
               <p className="hidden lg:block">Sort</p>
             </Button>
-            <Button size="xs" className="flex gap-2">
+            <Button variant="outline" size="xs" className="flex gap-2">
               <FaFilter />
               <p className="hidden lg:block">Filter</p>
             </Button>

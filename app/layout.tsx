@@ -4,7 +4,7 @@ import Navbar from '@/components/ui/navbar';
 import { ToastProvider } from '@/components/hooks/use-toast';
 
 export const metadata = {
-  title: 'My Next.js App',
+  title: 'Meloworld',
 };
 
 export default function RootLayout({

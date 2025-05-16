@@ -17,7 +17,7 @@ interface LoginProps {
 }
 
 const LoginForm: React.FC<LoginProps> = ({ userRole }) => {
-  const {token, hydrated} = useAuthStore()
+  const { token, hydrated } = useAuthStore();
   const router = useRouter();
   const setAuth = useAuthStore((state) => state.setAuth);
   const { toast } = useToast();
@@ -32,13 +32,15 @@ const LoginForm: React.FC<LoginProps> = ({ userRole }) => {
       error: "",
     },
   });
-  
+
   useEffect(() => {
     if (token && hydrated) {
       if (userRole === "admin") {
         router.replace("/admin/dashboard");
       } else if (userRole === "candidate") {
         router.replace("/candidate");
+      } else if (userRole === "therapist") {
+        router.replace("/therapist/dashboard");
       }
     }
   }, [token, userRole, router, hydrated]);
@@ -111,7 +113,7 @@ const LoginForm: React.FC<LoginProps> = ({ userRole }) => {
             formState.password.value
           );
           if (response.ok) {
-            const {token, name, email} = response.data;
+            const { token, name, email } = response.data;
             toast({
               title: "Admin signup successful",
               description: "Redirecting to admin dashboard…",
@@ -124,17 +126,39 @@ const LoginForm: React.FC<LoginProps> = ({ userRole }) => {
           break;
 
         case "candidate":
-          
           response = await loginService.candidate(
             formState.email.value,
             formState.password.value
           );
           if (response.ok) {
-            const {token, name, email} = response.data;
+            const { token, name, email } = response.data;
             setAuth(token, "candidate", { name, email });
             toast({
               title: "Login successful",
               description: "Redirecting to candidate portal…",
+              variant: "success",
+              position: "top-right",
+            });
+            router.push("/candidate");
+          }
+          break;
+
+        case "therapist":
+          response = await loginService.therapist(
+            formState.email.value,
+            formState.password.value
+          );
+          if (response.ok) {
+            const { therapist } = response.data;
+            const { email, therapist_name, therapist_id, license_number } =
+              therapist;
+            setAuth(`${therapist_id + "-" + license_number}`, "candidate", {
+              name: therapist_name,
+              email,
+            });
+            toast({
+              title: "Login successful",
+              description: "Redirecting to therapist dashboard…",
               variant: "success",
               position: "top-right",
             });
@@ -202,7 +226,10 @@ const LoginForm: React.FC<LoginProps> = ({ userRole }) => {
       </form>
       <p className="text-sm mt-4 text-center">
         Don't have an account?{" "}
-        <Link href={`/auth/${userRole}/signup`} className="font-semibold hover:underline">
+        <Link
+          href={`/auth/${userRole}/signup`}
+          className="font-semibold hover:underline"
+        >
           Sign up
         </Link>
       </p>

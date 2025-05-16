@@ -32,6 +32,13 @@ export default function Home() {
         >
           Admin
         </Button>
+        <Button
+          onClick={() => router.push("/therapist/dashboard")}
+          variant="outline"
+          size="xs"
+        >
+          Therapist
+        </Button>
       </Card>
     </main>
   );
