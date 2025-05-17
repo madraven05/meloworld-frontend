@@ -8,9 +8,9 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const sizeStyles: Record<NonNullable<InputProps["inputSize"]>, string> = {
   xs: "py-1 text-xs",
-  sm: "py-1.5 text-sm",
-  md: "py-2 text-base",
-  lg: "py-3 text-lg",
+  sm: "py-1 text-xs",
+  md: "py-1.5 text-sm",
+  lg: "py-1.5 text-lg",
 };
 
 const Input: React.FC<InputProps> = ({

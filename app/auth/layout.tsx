@@ -21,9 +21,8 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ imgSrc, children }) => {
           className="
             absolute
             bottom-0
-            top-18
+            
             lg:relative
-            lg:top-0
             md:relative
             z-10
             w-full
@@ -45,24 +44,6 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ imgSrc, children }) => {
             overflow-auto
           "
         >
-          <img
-            src={imgSrc}
-            alt="Centered for md screens"
-            className="
-              block
-              md:block
-              lg:hidden
-              absolute
-              top-1/2
-              left-1/2
-              -translate-x-1/2
-              -translate-y-1/2
-              opacity-20
-              pointer-events-none
-              max-w-[80%]
-              z-0
-            "
-          />
 
           {/* Login Form */}
           <div

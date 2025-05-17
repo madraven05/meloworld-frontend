@@ -1,10 +1,10 @@
 import React from "react";
 import SignUpForm from "@/components/forms/signup";
 
-const AdminSignup = () => {
+const Candidateignup = () => {
   return (
       <SignUpForm userRole="candidate" />
   );
 };
 
-export default AdminSignup;
+export default Candidateignup;

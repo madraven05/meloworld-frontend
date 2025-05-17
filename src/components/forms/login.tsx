@@ -11,6 +11,7 @@ import { UserRole } from "../types";
 import { useToast } from "../hooks/use-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { BsCircle, BsHourglass } from "react-icons/bs";
 
 interface LoginProps {
   userRole: UserRole;
@@ -20,6 +21,7 @@ const LoginForm: React.FC<LoginProps> = ({ userRole }) => {
   const { token, hydrated } = useAuthStore();
   const router = useRouter();
   const setAuth = useAuthStore((state) => state.setAuth);
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
   const [formState, setFormState] = useState<FormState>({
@@ -87,7 +89,7 @@ const LoginForm: React.FC<LoginProps> = ({ userRole }) => {
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    setLoading(true);
     let errorFlag = false;
     Object.values(formState).forEach((value) => {
       if (value.error.length > 0) {
@@ -121,6 +123,7 @@ const LoginForm: React.FC<LoginProps> = ({ userRole }) => {
               position: "top-right",
             });
             setAuth(token, "admin", { name, email });
+            setLoading(false);
             router.push("/admin/dashboard");
           }
           break;
@@ -133,6 +136,7 @@ const LoginForm: React.FC<LoginProps> = ({ userRole }) => {
           if (response.ok) {
             const { token, name, email } = response.data;
             setAuth(token, "candidate", { name, email });
+            setLoading(false);
             toast({
               title: "Login successful",
               description: "Redirecting to candidate portal…",
@@ -152,10 +156,12 @@ const LoginForm: React.FC<LoginProps> = ({ userRole }) => {
             const { therapist } = response.data;
             const { email, therapist_name, therapist_id, license_number } =
               therapist;
-            setAuth(`${therapist_id + "-" + license_number}`, "candidate", {
+            setAuth(`${therapist_id + "-" + license_number}`, "therapist", {
               name: therapist_name,
               email,
+              therapist_id,
             });
+            setLoading(false);
             toast({
               title: "Login successful",
               description: "Redirecting to therapist dashboard…",
@@ -182,6 +188,7 @@ const LoginForm: React.FC<LoginProps> = ({ userRole }) => {
         variant: "error",
         // position: "top-right",
       });
+      setLoading(false);
     }
   };
 
@@ -220,8 +227,8 @@ const LoginForm: React.FC<LoginProps> = ({ userRole }) => {
             </p>
           )}
         </div>
-        <Button type="submit" className="w-fit mt-5">
-          Login
+        <Button disabled={loading} type="submit" className="w-fit mt-5">
+          {!loading ? <p>Login</p> : <span className="flex gap-2 items-center"><BsHourglass className="animate-bounce"/> Logging In</span>}
         </Button>
       </form>
       <p className="text-sm mt-4 text-center">
