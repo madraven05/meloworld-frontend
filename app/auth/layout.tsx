@@ -5,11 +5,10 @@ import logo from "@/assets/logo-white.png";
 
 
 interface AuthLayoutProps {
-  imgSrc: string;
   children?: ReactNode;
 }
 
-const AuthLayout: React.FC<AuthLayoutProps> = ({ imgSrc, children }) => {
+const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
   return (
     <>
       <div className="h-full w-full flex items-center justify-center pt-10 lg:px-10 lg:pt-20 md:px-20 md:pt-32 md:pb-10">

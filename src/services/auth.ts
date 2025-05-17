@@ -1,4 +1,4 @@
-import { signAndRequest } from "../lib/aws-axios";
+import { signAndRequest } from "@/lib/aws-axios";
 
 const userTypeHost: { [type: string]: string } = {
   admin: process.env.NEXT_PUBLIC_AWS_ADMIN_HOST as string,
@@ -66,7 +66,7 @@ export const signupService = {
     const response = await signAndRequest(
       "POST",
       {},
-      userTypeHost["candidate"],
+      userTypeHost["therapist"],
       "/default/psychometricUser/user?action=register",
       payload
     );
@@ -127,7 +127,7 @@ export const loginService = {
       "POST",
       {},
       userTypeHost["therapist"],
-      "/default/psychometricUser/user?action=login",
+      "/default/therapistHandlerAPI?action=loginTherapist",
       payload
     );
   

@@ -1,6 +1,6 @@
 import { signAndRequest } from "@/lib/aws-axios";
 
-const PATIENT_HOST = process.env.NEXT_PUBLIC_AWS_CHAPTER_HOST as string;
+const PATIENT_HOST = process.env.NEXT_PUBLIC_AWS_PATIENT_HOST as string;
 const THERAPIST_HOST = process.env.NEXT_PUBLIC_AWS_THERAPIST_HOST as string;
 
 export const loginTherapist = async (email: string, password: string) => {
@@ -32,6 +32,18 @@ export const getTherapistById = async (therapistId: number) => {
     {},
     THERAPIST_HOST,
     "/default/therapistHandlerAPI?action=getTherapistProfile",
+    payload
+  );
+  return response;
+};
+
+export const getAssignedPatientsByTherapistId = async (therapistId: number) => {
+  const payload = { therapist_id: therapistId };
+  const response = await signAndRequest(
+    "POST",
+    {},
+    THERAPIST_HOST,
+    "/default/therapistHandlerAPI?action=getAssignedPatients",
     payload
   );
   return response;

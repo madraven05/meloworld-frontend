@@ -26,7 +26,6 @@ export async function signAndRequest(
     accessKeyId,
     secretAccessKey,
     region,
-    service,
   });
 
   const maxRetries = 3;

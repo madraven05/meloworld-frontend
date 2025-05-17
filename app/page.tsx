@@ -33,7 +33,7 @@ export default function Home() {
           Admin
         </Button>
         <Button
-          onClick={() => router.push("/therapist/dashboard")}
+          onClick={() => router.push("/auth/therapist/login")}
           variant="outline"
           size="xs"
         >

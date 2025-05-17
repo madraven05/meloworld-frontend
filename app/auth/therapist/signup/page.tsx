@@ -3,7 +3,6 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { IoKey, IoMail, IoPerson } from "react-icons/io5";
 import { useRouter } from "next/navigation";
-import { UserRole } from "@/components/types";
 import { useToast } from "@/components/hooks/use-toast";
 import Input from "@/components/ui/input/input";
 import Button from "@/components/ui/button/button";
@@ -11,10 +10,9 @@ import Button from "@/components/ui/button/button";
 export type FormState = { [key: string]: { value: any; error: string } };
 
 interface SignUpProps {
-  userRole: UserRole;
 }
 
-const TherapistSignUpForm: React.FC<SignUpProps> = ({ userRole }) => {
+const TherapistSignUpForm: React.FC<SignUpProps> = ({  }) => {
   const router = useRouter();
   const { toast } = useToast();
   const [formState, setFormState] = useState<FormState>({
