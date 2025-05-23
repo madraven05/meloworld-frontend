@@ -204,7 +204,6 @@ const SessionsPage: React.FC = () => {
       });
   };
 
-  const handleSessionDelete = () => {};
 
   return (
     <div className="dashboard-panel relative">

@@ -272,7 +272,7 @@ const SessionPage = () => {
           )}
         </div>
 
-        {session.session_status === "In Progress" || session.session_status === "Completed" && (
+        {(session.session_status === "In Progress" || session.session_status === "Completed") && (
           <div>
             <h2 className="mt-5">Waiting Queue</h2>
             {session.metadata &&
