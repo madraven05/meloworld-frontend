@@ -29,25 +29,27 @@ const Navbar: React.FC = () => {
       case "candidate":
         if (token) {
           setNavbarItems([
-            { name: "Home", link: "#" },
+            { name: "Home", link: "/candidate" },
             { name: "Logout", onClick: clearAuth },
           ]);
         }
         break;
-
-        case "org":
-          setHidden(true);
-          break;
-
+      case "org":
+        setHidden(true);
+        // Additional logic for org can be added here if needed
+        break;
+      case "therapist":
+        setHidden(true);
+        // Additional logic for org can be added here if needed
+        break;
       case "admin":
         setHidden(true);
+        // Additional logic for admin can be added here if needed
         break;
-
       default:
-        setHidden(true);
         break;
     }
-  }, [userRole]);
+  }, [userRole, token, clearAuth]);
 
   // if(window.location.pathname.includes("admin")) {
   //   return null;
@@ -58,16 +60,11 @@ const Navbar: React.FC = () => {
       {!hidden && (
         <div className="fixed top-0 w-full z-50">
           {/* Desktop navbar (shown only in lg and md screens) */}
-          <div className="bg-secondary backdrop-blur-xl w-full px-10 py-2 justify-between items-center shadow-lg lg:flex md:flex gap-5 hidden">
-            <div className="flex items-center gap-2">
-              <img src={logo.src} className="w-12 " />
-              <h1 className="text-2xl text-primary">Meloworld</h1>
-            </div>
-            <div className="h-full flex justify-center items-center gap-5">
+            <div className="h-full lg:flex hidden py-3 px-10 bg-secondary shadow-lg justify-end items-center gap-5">
               {navbarItems.map((item, idx) => (
                 <a
                   onClick={item.onClick}
-                  className="font-semibold"
+                  className="font-semibold hover:bg-sky-900 hover:text-secondary px-2 py-1 rounded-md transition duration-200  hover:shadow-md"
                   href={item.link}
                   key={idx}
                 >
@@ -75,13 +72,12 @@ const Navbar: React.FC = () => {
                 </a>
               ))}
             </div>
-          </div>
 
           {/* Mobile Button (hidden in lg and md) */}
           <div className="lg:hidden md:hidden">
             <button
               onClick={() => setShowMenu(!showMenu)}
-              className="fixed top-5 right-5 rounded-full p-2 bg-secondary shadow-lg z-50"
+              className="fixed top-5 right-5 rounded-full p-2 bg-secondary shadow-lg z-100"
             >
               {!showMenu ? (
                 <TbMenu3 className="text-2xl" />

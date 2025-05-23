@@ -1,24 +1,19 @@
 "use client";
 
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import Button from "../ui/button/button";
 import { IoKey, IoMail, IoPerson } from "react-icons/io5";
-import Input from "../ui/input/input";
-import { signupService } from "../../services/auth";
-import { UserRole } from "../types";
-import { useToast } from "../hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { BsHourglass } from "react-icons/bs";
+import { useToast } from "@/components/hooks/use-toast";
+import Input from "@/components/ui/input/input";
+import Button from "@/components/ui/button/button";
 
 export type FormState = { [key: string]: { value: any; error: string } };
 
 interface SignUpProps {
-  userRole: UserRole;
 }
 
-const SignUpForm: React.FC<SignUpProps> = ({ userRole }) => {
+const TherapistSignUpForm: React.FC<SignUpProps> = ({  }) => {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const [formState, setFormState] = useState<FormState>({
     name: {
@@ -109,7 +104,7 @@ const SignUpForm: React.FC<SignUpProps> = ({ userRole }) => {
 
   const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
+
     let errorFlag = false;
     Object.values(formState).forEach((value) => {
       if (value.error.length > 0) {
@@ -127,55 +122,8 @@ const SignUpForm: React.FC<SignUpProps> = ({ userRole }) => {
         headers: Headers;
       } | null;
 
-      switch (userRole) {
-        case "admin":
-          response = await signupService.admin(
-            formState.name.value,
-            formState.email.value,
-            formState.password.value
-          );
-          if (response.ok) {
-            setLoading(false);
-            toast({
-              title: "Admin signup successful",
-              description: "Redirecting to admin dashboard…",
-              variant: "success",
-              position: "top-right",
-            });
-            router.push("/auth/admin/login");
-          }
-          break;
-
-        case "candidate":
-          response = await signupService.candidate(
-            formState.name.value,
-            formState.email.value,
-            formState.password.value
-          );
-          if (response.ok) {
-            setLoading(false);
-            toast({
-              title: "Signup successful",
-              description: "Redirecting to candidate portal…",
-              variant: "success",
-              position: "top-right",
-            });
-            router.push("/auth/candidate/login");
-          }
-          break;
-
-        default:
-          // you can handle unsupported roles here
-          setLoading(false);
-          toast({
-            title: "Role not supported",
-            variant: "error",
-            position: "top-right",
-          });
-          return;
-      }
+      
     } catch (err) {
-      setLoading(false);
       toast({
         title: "Signup failed",
         description: (err as any).message,
@@ -249,8 +197,8 @@ const SignUpForm: React.FC<SignUpProps> = ({ userRole }) => {
             </p>
           )}
         </div>
-        <Button disabled={loading} type="submit" className="w-fit mt-5">
-          {!loading ? <p>Signup</p> : <span className="flex gap-2 items-center"><BsHourglass className="animate-bounce"/> Signing Up</span>}
+        <Button type="submit" className="w-fit mt-5">
+          Sign Up
         </Button>
       </form>
       <p className="text-sm mt-4 text-center">
@@ -261,4 +209,4 @@ const SignUpForm: React.FC<SignUpProps> = ({ userRole }) => {
   );
 };
 
-export default SignUpForm;
+export default TherapistSignUpForm;

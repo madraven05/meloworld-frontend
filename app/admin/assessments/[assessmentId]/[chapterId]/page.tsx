@@ -90,7 +90,7 @@ const ChapterPanel: React.FC = () => {
       <div className="relative w-full flex-col flex gap-2">
         <h2>Quizzes</h2>
         <div className="flex flex-col gap-5 items-center justify-center w-full">
-          {quizzes.map((quiz, idx) => (
+          {/* {quizzes.map((quiz, idx) => (
             <Dropdown title={quiz.title} key={idx}>
               <div className="flex flex-col gap-3">
                 {quiz.questions.map((ques, id) => (
@@ -109,7 +109,7 @@ const ChapterPanel: React.FC = () => {
                 </div>
               </div>
             </Dropdown>
-          ))}
+          ))} */}
         </div>
       </div>
       <AnimatePresence>

@@ -1,10 +1,11 @@
 "use client";
 
-import { Therapist } from "@/components/types";
+import { useAuthStore } from "@/components/stores/auth-store";
+import { Patient, Therapist } from "@/components/types";
 import Card from "@/components/ui/card/card";
 import Table from "@/components/ui/table/table";
 import { getPatientById, getTherapistById } from "@/services/therapist";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BsCheck2Circle } from "react-icons/bs";
 import { IoPeople } from "react-icons/io5";
 
@@ -59,31 +60,21 @@ const sessionData = [
   },
 ];
 
-const therapist: Therapist = {
-  therapist_id: 1,
-  user_id: null,
-  email: "test@melo.com",
-  password: "test@1234",
-  therapist_name: "Dr. Smith",
-  dob: "1980-01-01T00:00:00.000Z",
-  license_number: "LIC-001",
-  specializations: '{"anxiety","stress"}',
-  assigned_user_ids: [],
-  metadata: null,
-  created_at: "2025-05-16T07:59:13.550Z",
-  updated_at: "2025-05-16T07:59:13.550Z",
-};
-
 const TherapistHome = () => {
+  const [patients, setPatients] = useState<Record<number, Patient>>({});
+  const { metadata } = useAuthStore(s => s)
+  if (!metadata) {
+    return <div>Loading...</div>;
+  }
+  const { name, therapist_id } = metadata;
+
   useEffect(() => {
     const fetchPatient = async (patientId: number) => {
       try {
         const response = await getPatientById(patientId);
-        console.log(response);
         if (response && response.ok) {
           const data = response.data;
-          console.log(data);
-          // return data;
+          return data["patient"];
         }
       } catch (err) {
         console.error(err);
@@ -93,35 +84,37 @@ const TherapistHome = () => {
       }
     };
 
-    const fetchTherapist = async (therapistId: number) => {
-      try {
-        const response = await getTherapistById(therapistId);
-        console.log(response);
-        if (response && response.ok) {
-          const data = response.data;
-          console.log(data);
-          // return data;
-        }
-      } catch (err) {
-        console.error(err);
-        return {
-          therapist_id: therapistId,
-        };
-      }
-    };
+    // const fetchTherapist = async (therapistId: number) => {
+    //   try {
+    //     const response = await getTherapistById(therapistId);
+    //     if (response && response.ok) {
+    //       const data = response.data;
+          
+    //       return data;
+    //     }
+    //   } catch (err) {
+    //     console.error(err);
+    //     return {
+    //       therapist_id: therapistId,
+    //     };
+    //   }
+    // };
 
-    // fetchTherapist(1);
+    // fetchTherapist(therapist_id);
 
-    // (async function updateSessions() {
-    //   const updatedSessions = await Promise.all(
-    //     sessionData.map(async (session) => {
-    //       const patient = await fetchPatient(session.patient_id);
-    //       return { ...session, patient };
-    //     })
-    //   );
-    //   console.log(updatedSessions);
-    // })();
-  }, []);
+    (async () => {
+      const updatedSessions = await Promise.all(
+        sessionData.map(async (session) => {
+          const patientData = await fetchPatient(session.patient_id);
+          setPatients((prev) => ({
+            ...prev,
+            [session.patient_id]: patientData,
+          }));
+        })
+      );
+      // console.log(updatedSessions);
+    })();
+  }, [name]);
 
   const stats = [
     {
@@ -139,7 +132,7 @@ const TherapistHome = () => {
   return (
     <div className="dashboard-panel">
       <div className="flex flex-col gap-5">
-        <h1>Welcome back {therapist.therapist_name}!</h1>
+        <h1>Welcome back {name}!</h1>
         <div
           className="
       w-full
@@ -176,7 +169,12 @@ const TherapistHome = () => {
                 .filter((s) => s.session_status === "Upcoming")
                 .map((s) => (
                   <tr key={`sess-${s.session_id}`}>
-                    <td>{s.patient_id}</td>
+                    <td>
+                      {patients[s.patient_id]
+                        ? patients[s.patient_id].first_name
+                        : ""}
+                    </td>
+
                     <td>{new Date(s.start_time).toLocaleString()}</td>
                     <td>{new Date(s.end_time).toLocaleString()}</td>
                   </tr>
@@ -193,7 +191,11 @@ const TherapistHome = () => {
                 .filter((s) => s.session_status === "Completed")
                 .map((s) => (
                   <tr key={`sess-${s.session_id}`}>
-                    <td>{s.patient_id}</td>
+                    <td>
+                      {patients[s.patient_id]
+                        ? patients[s.patient_id].first_name
+                        : ""}
+                    </td>
                     <td>{new Date(s.start_time).toLocaleString()}</td>
                     <td>{new Date(s.end_time).toLocaleString()}</td>
                     <td>{s.metadata.completion_feedback}</td>

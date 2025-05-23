@@ -1,5 +1,6 @@
 "use client";
 
+import { useAdminStore } from "@/components/stores/admin-store";
 import { useAuthStore } from "@/components/stores/auth-store";
 import { Assessment } from "@/components/types";
 import Card from "@/components/ui/card/card";
@@ -22,26 +23,7 @@ const OrganizationPanel = () => {
     Record<number, string[]>
   >({});
 
-  const [organizations] = useState<Record<string, any>[]>([
-    {
-      id: 1,
-      name: "ABC Corporated",
-      candidates: 214,
-      status: "approved",
-    },
-    {
-      id: 2,
-      name: "XYZ Pvt Ltd.",
-      candidates: 172,
-      status: "approved",
-    },
-    {
-      id: 3,
-      name: "Your Health",
-      candidates: 53,
-      status: "disapproved",
-    },
-  ]);
+  const { organizations, updateOrganization } = useAdminStore((state) => state);
 
   useEffect(() => {
     const fetchScales = async () => {
@@ -64,7 +46,7 @@ const OrganizationPanel = () => {
     }));
   };
 
-  const headings = ["Name", "Candidates", "Status"];
+  const headings = ["Name", "Type", "Approve", "Status"];
 
   return (
     <div className="dashboard-panel">
@@ -85,12 +67,12 @@ const OrganizationPanel = () => {
               <h2>Assign Scales</h2>
               <Table headings={["Name", "Scales"]}>
                 {organizations.map((org) => (
-                  <tr key={org.id}>
-                    <td>{org.name}</td>
+                  <tr key={org.organization_id}>
+                    <td>{org.organization_name}</td>
                     <td>
                       <MultiSelect
-                        selected={selectedScales[org.id] || []}
-                        onChange={(values) => handleScaleChange(org.id, values)}
+                        selected={selectedScales[org.organization_id] || []}
+                        onChange={(values) => handleScaleChange(org.organization_id, values)}
                         placeholder="Select Scales"
                         items={
                           scales?.map((s) => ({
@@ -113,12 +95,32 @@ const OrganizationPanel = () => {
               <Table headings={headings}>
                 {organizations.map((row, rowIdx) => (
                   <tr key={rowIdx}>
-                    <td>{row["name"]}</td>
-                    <td>{row["candidates"]}</td>
+                    <td>{row["organization_name"]}</td>
+                    <td>{row["organization_type"]}</td>
                     <td>
                       <Switch
-                        checked={row["status"] == "approved"}
-                        onChange={() => {}}
+                        checked={row["is_approved"]}
+                        onChange={(value) => {
+                          updateOrganization(row.organization_id, {
+                            is_approved: value,
+                          });
+                        }}
+                        className="group flex h-7 w-14 cursor-pointer rounded-full bg-secondary p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-primary/60"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none inline-block size-5 translate-x-0 rounded-full bg-sky-900 ring-0 shadow-lg transition duration-200 ease-in-out group-data-[checked]:translate-x-7"
+                        />
+                      </Switch>
+                    </td>
+                    <td>
+                      <Switch
+                        checked={row["is_enabled"]}
+                        onChange={(value) => {
+                          updateOrganization(row.organization_id, {
+                            is_enabled: value,
+                          });
+                        }}
                         className="group flex h-7 w-14 cursor-pointer rounded-full bg-secondary p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-primary/60"
                       >
                         <span

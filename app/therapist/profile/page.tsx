@@ -1,8 +1,10 @@
 "use client";
+import { useAuthStore } from "@/components/stores/auth-store";
 import { Therapist } from "@/components/types";
 import Button from "@/components/ui/button/button";
 import Card from "@/components/ui/card/card";
 import Input from "@/components/ui/input/input";
+import { getTherapistById } from "@/services/therapist";
 import React, { useEffect, useState } from "react";
 import { FaPerson } from "react-icons/fa6";
 import { FiEdit, FiSave, FiSettings } from "react-icons/fi";
@@ -24,7 +26,28 @@ const therapist: Therapist = {
 
 const TherapistProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [therapistData, setTherapistData] = useState(therapist);
+  const [therapistData, setTherapistData] = useState<Therapist | null>(null);
+  const { metadata } = useAuthStore((s) => s);
+
+  useEffect(() => {
+    if (metadata && "therapist_id" in metadata) {
+      const fetchTherapist = async (therapistId: number) => {
+        console.log("fetching therapist with id:", therapistId);
+        try {
+          const response = await getTherapistById(therapistId);
+          if (response && response.ok) {
+            const data = response.data;
+            setTherapistData(data["therapist"]);
+          }
+        } catch (err) {
+          console.error(err);
+          throw err;
+        }
+      };
+
+      fetchTherapist(metadata["therapist_id"]);
+    }
+  }, [metadata]);
 
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
@@ -34,7 +57,7 @@ const TherapistProfilePage = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setTherapistData((prev) => ({ ...prev, [name]: value }));
+    setTherapistData((prev) => (prev ? { ...prev, [name]: value } : prev));
   };
 
   const handleSave = () => {
@@ -68,82 +91,84 @@ const TherapistProfilePage = () => {
               {isEditing ? "Save" : "Edit"}
             </Button>
           </div>
-          <div className="grid grid-cols-1 gap-8">
-            <div>
-              <h3 className="text-xl font-medium mb-2">Name</h3>
-              {isEditing ? (
-                <Input
-                  type="text"
-                  name="name"
-                  value={therapistData.therapist_name}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p className="">{therapistData.therapist_name}</p>
-              )}
+          {therapistData ? (
+            <div className="grid grid-cols-1 gap-8">
+              <div>
+                <h3 className="text-xl font-medium mb-2">Name</h3>
+                {isEditing ? (
+                  <Input
+                    type="text"
+                    name="name"
+                    value={therapistData.therapist_name}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  <p className="">{therapistData.therapist_name}</p>
+                )}
+              </div>
+              <div>
+                <h3 className="text-xl font-medium mb-2">Email</h3>
+                {isEditing ? (
+                  <Input
+                    type="email"
+                    name="email"
+                    value={therapistData.email}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  <p className="">{therapistData.email}</p>
+                )}
+              </div>
+              <div>
+                <h3 className="text-xl font-medium mb-2">DOB</h3>
+                {isEditing ? (
+                  <Input
+                    type="date"
+                    name="dob"
+                    value={therapistData.dob}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  <p className="">
+                    {new Date(therapistData.dob).toLocaleDateString()}
+                  </p>
+                )}
+              </div>
+              <div>
+                <h3 className="text-xl font-medium mb-2">License Number</h3>
+                {isEditing ? (
+                  <Input
+                    type="text"
+                    name="license_number"
+                    value={therapistData.license_number}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  <p className="">{therapistData.license_number}</p>
+                )}
+              </div>
+              <div>
+                <h3 className="text-xl font-medium mb-2">Specialization</h3>
+                {isEditing ? (
+                  <Input
+                    name="description"
+                    value={therapistData.specializations
+                      .replace(/[{}"]/g, "")
+                      .split(",")
+                      .join(", ")}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  <p className="">
+                    {therapistData.specializations
+                      .replace(/[{}"]/g, "")
+                      .split(",")
+                      .join(", ")}
+                  </p>
+                )}
+              </div>
             </div>
-            <div>
-              <h3 className="text-xl font-medium mb-2">Email</h3>
-              {isEditing ? (
-                <Input
-                  type="email"
-                  name="email"
-                  value={therapistData.email}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p className="">{therapistData.email}</p>
-              )}
-            </div>
-            <div>
-              <h3 className="text-xl font-medium mb-2">DOB</h3>
-              {isEditing ? (
-                <Input
-                  type="date"
-                  name="dob"
-                  value={therapistData.dob}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p className="">
-                  {new Date(therapistData.dob).toLocaleDateString()}
-                </p>
-              )}
-            </div>
-            <div>
-              <h3 className="text-xl font-medium mb-2">License Number</h3>
-              {isEditing ? (
-                <Input
-                  type="text"
-                  name="license_number"
-                  value={therapistData.license_number}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p className="">{therapistData.license_number}</p>
-              )}
-            </div>
-            <div>
-              <h3 className="text-xl font-medium mb-2">Specialization</h3>
-              {isEditing ? (
-                <Input
-                  name="description"
-                  value={therapistData.specializations
-                    .replace(/[{}"]/g, "")
-                    .split(",")
-                    .join(", ")}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p className="">
-                  {therapistData.specializations
-                    .replace(/[{}"]/g, "")
-                    .split(",")
-                    .join(", ")}
-                </p>
-              )}
-            </div>
-          </div>
+          ) : null}
         </Card>
       </div>
     </div>

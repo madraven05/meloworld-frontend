@@ -1,8 +1,8 @@
 import React from "react";
 import LoginForm from "src/components/forms/login";
 
-const AdminLogin = () => {
+const TherapistLogin = () => {
   return <LoginForm userRole="therapist" />;
 };
 
-export default AdminLogin;
+export default TherapistLogin;

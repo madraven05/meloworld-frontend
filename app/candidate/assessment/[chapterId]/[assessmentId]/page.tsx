@@ -20,6 +20,8 @@ const AssessmentForm: React.FC = () => {
   const token = useAuthStore((s) => s.token);
 
   const [pageIndex, setPageIndex] = useState(0);
+  const [current, setCurrent] = useState<Question | null>(null);
+  
   const [questions, setQuestions] = useState<Question[]>([]);
   const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
 
@@ -35,7 +37,8 @@ const AssessmentForm: React.FC = () => {
         );
         if (res.ok) {
           const data = await res.json();
-          setQuestions(data.quiz.questions);
+          console.log("fetched quiz:", data);
+          setQuestions(data.questions);
         }
       } catch (err) {
         console.error(err);
@@ -47,7 +50,9 @@ const AssessmentForm: React.FC = () => {
   // Initialize userAnswers
   useEffect(() => {
     if (questions.length) {
+      console.log("questions:", questions);
       setUserAnswers(questions.map((q) => (q.type === "multiple" ? [] : "")));
+      setCurrent(questions[pageIndex]);
     }
   }, [questions]);
 
@@ -60,11 +65,16 @@ const AssessmentForm: React.FC = () => {
     });
   };
 
+  useEffect(() => {
+    if (questions.length) {
+      setCurrent(questions[pageIndex]);
+    }
+  }, [pageIndex]);
+
   const goPrev = () => setPageIndex((i) => Math.max(0, i - 1));
   const goNext = () =>
     setPageIndex((i) => Math.min(questions.length - 1, i + 1));
 
-  const current = questions[pageIndex];
   const currentAnswer = userAnswers[pageIndex];
 
   return (
@@ -191,22 +201,23 @@ const AssessmentForm: React.FC = () => {
           <button
             onClick={goPrev}
             disabled={pageIndex === 0}
-            className="disabled:opacity-50 rounded-full hover:bg-sky-900/10 p-2 md:p-5"
+            className="disabled:opacity-50 rounded-full hover:bg-sky-900/10 p-2 md:p-3"
           >
-            <FiChevronLeft className="md:size-14 size-18" />
+            <FiChevronLeft className="md:size-12 size-12" />
           </button>
 
           {pageIndex < questions.length - 1 ? (
             <button
               onClick={goNext}
-              className="disabled:opacity-50 rounded-full hover:bg-sky-900/10 p-2 md:p-5"
+              className="disabled:opacity-50 rounded-full hover:bg-sky-900/10 p-2 md:p-3"
             >
-              <FiChevronRight className="md:size-14 size-18" />
+              <FiChevronRight className="md:size-12 size-12" />
             </button>
           ) : (
             <div className="flex items-center justify-end w-full">
               <Button
                 variant="outline"
+                size="xs"
                 onClick={() => console.log("Submit")}
                 className="px-4 py-2 md:px-6 md:py-3"
               >

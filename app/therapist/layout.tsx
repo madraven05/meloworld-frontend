@@ -34,11 +34,11 @@ export default function OrgLayout({ children }: TherapistLayoutProps) {
         },
       ];
   return (
-    // <ProtectedRoute>
+    <ProtectedRoute>
       <main className="flex h-screen w-screen">
         <DashboardSidebar title="Therapist" menuItems={menuItems}/>
         <div className="flex-1 overflow-auto">{children}</div>
       </main>
-    // </ProtectedRoute>
+    </ProtectedRoute>
   );
 }
