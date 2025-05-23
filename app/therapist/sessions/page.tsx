@@ -1,5 +1,9 @@
 "use client";
 
+import { useToast } from "@/components/hooks/use-toast";
+import { useAuthStore } from "@/components/stores/auth-store";
+import { useTherapistStore } from "@/components/stores/therapist-store";
+import { Session } from "@/components/types";
 import Button from "@/components/ui/button/button";
 import Card from "@/components/ui/card/card";
 import {
@@ -13,8 +17,17 @@ import {
 } from "@/components/ui/dialog/dialog";
 import Input from "@/components/ui/input/input";
 import Select from "@/components/ui/select/select";
-import React from "react";
-import { BsHeadsetVr, BsPlus } from "react-icons/bs";
+import Table from "@/components/ui/table/table";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import {
+  BsChevronRight,
+  BsFilter,
+  BsHeadsetVr,
+  BsInfo,
+  BsInfoCircle,
+  BsPlus,
+} from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
 
 const sessionData = [
@@ -138,7 +151,61 @@ const getPatientDetails = (patientId: number) => {
   return patientData.filter((p) => p.patient_id == patientId)[0];
 };
 
-const SessionsPage = () => {
+const SessionsPage: React.FC = () => {
+  const router = useRouter();
+  const { fetchSessionsByTherapistId, createSession, updateSession } =
+    useTherapistStore((s) => s);
+  const sessions = useTherapistStore(s => s.sessions);
+  const { metadata } = useAuthStore((s) => s);
+  if (!metadata) {
+    return <div>Loading...</div>;
+  }
+  const { name, therapist_id } = metadata;
+  const [newSessionDate, setNewSessionDate] = useState<string>("");
+  const [filter, setFilter] = useState<string>("Scheduled");
+
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (!therapist_id) return;
+    fetchSessionsByTherapistId(therapist_id);
+  }, [therapist_id]);
+
+  useEffect(() => {
+    console.log("Sessions updated:", sessions);
+  }, [sessions]);
+
+  const handleCreateSession = () => {
+    if (!newSessionDate) {
+      toast({
+        title: "Error",
+        description: "Please select a date and time for the session.",
+        variant: "error",
+      });
+      return;
+    }
+
+    createSession(therapist_id, newSessionDate, {}, 1)
+      .then(() => {
+        toast({
+          title: "Success",
+          description: "Session created successfully.",
+          variant: "success",
+        });
+        setNewSessionDate("");
+      })
+      .catch((error) => {
+        console.error("Error creating session:", error);
+        toast({
+          title: "Error",
+          description: "Failed to create session.",
+          variant: "error",
+        });
+      });
+  };
+
+  const handleSessionDelete = () => {};
+
   return (
     <div className="dashboard-panel relative">
       <div className="w-full flex justify-between">
@@ -154,109 +221,84 @@ const SessionsPage = () => {
             <DialogHeader>
               <DialogTitle>Create new session</DialogTitle>
               <DialogDescription>
-                <div className="flex flex-col gap-5 w-full h-full">
-                  <div>
-                    <label htmlFor="date" className="text-base font-semibold">
-                      Date
-                    </label>
-                    <Input id="date" type="datetime-local" />
-                  </div>
-                  <div className="w-full flex flex-col">
-                    <label
-                      htmlFor="patient"
-                      className="text-base font-semibold"
-                    >
-                      Patient
-                    </label>
-                    <Select
-                      items={patientData.map((p) => ({
-                        label: p.first_name + " " + p.last_name,
-                        value: p.patient_id.toString(),
-                      }))}
-                      value="0"
-                      onValueChange={() => {}}
-                    />
-                  </div>
+                <div className="flex flex-col gap-2 w-full h-full">
+                  <label htmlFor="date" className="text-base font-semibold">
+                    Date
+                  </label>
+                  <Input
+                    value={newSessionDate}
+                    onChange={(e) => {
+                      setNewSessionDate(e.target.value);
+                    }}
+                    id="date"
+                    type="datetime-local"
+                  />
                 </div>
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
               <div className="w-full flex gap-2">
-                <Button size="xs">Create</Button>
-                <Button size="xs" variant="outline">Cancel</Button>
+                <Button onClick={handleCreateSession} size="xs">
+                  Create
+                </Button>
+                <Button size="xs" variant="outline">
+                  Cancel
+                </Button>
               </div>
             </DialogFooter>
           </DialogContent>
         </Dialog>
       </div>
-      <h2>Upcoming</h2>
-      <div className="flex flex-wrap gap-8">
-        {sessionData
-          .filter((s) => s.session_status == "Upcoming")
-          .map((s) => (
-            <div className="w-60 hover:scale-110 transition duration-300 ease-in-out">
-              <Card className="p-5 w-full bg-white/60">
-                <div className="flex flex-col gap-2 items-center justify-center w-full">
-                  <BsHeadsetVr className="text-7xl" />
-                  <h3>{new Date(s.start_time).toLocaleString()}</h3>
-                  <p>
-                    Duration:{" "}
-                    {(() => {
-                      const start = new Date(s.start_time);
-                      const end = new Date(s.end_time);
-                      const diff = end.getTime() - start.getTime();
-                      const diffHours = Math.floor(diff / (1000 * 60 * 60));
-                      const diffMinutes = Math.floor(
-                        (diff % (1000 * 60 * 60)) / (1000 * 60)
-                      );
-                      return `${diffHours} hrs ${diffMinutes} mins`;
-                    })()}
-                  </p>
-                  <p>
-                    with{" "}
-                    <span className="font-semibold">
-                      {getPatientDetails(s.patient_id).first_name}
-                    </span>
-                  </p>
-                </div>
-              </Card>
-            </div>
-          ))}
-      </div>
-      <h2>Completed</h2>
-      <div className="flex flex-wrap gap-8">
-        {sessionData
-          .filter((s) => s.session_status == "Completed")
-          .map((s) => (
-            <div className="w-60 hover:scale-110 transition duration-300 ease-in-out">
-              <Card className="p-5 w-full bg-white/60">
-                <div className="flex flex-col gap-2 items-center justify-center w-full">
-                  <BsHeadsetVr className="text-7xl" />
-                  <h3>{new Date(s.start_time).toLocaleString()}</h3>
-                  <p>
-                    Duration:{" "}
-                    {(() => {
-                      const start = new Date(s.start_time);
-                      const end = new Date(s.end_time);
-                      const diff = end.getTime() - start.getTime();
-                      const diffHours = Math.floor(diff / (1000 * 60 * 60));
-                      const diffMinutes = Math.floor(
-                        (diff % (1000 * 60 * 60)) / (1000 * 60)
-                      );
-                      return `${diffHours} hrs ${diffMinutes} mins`;
-                    })()}
-                  </p>
-                  <p>
-                    with{" "}
-                    <span className="font-semibold">
-                      {getPatientDetails(s.patient_id).first_name}
-                    </span>
-                  </p>
-                </div>
-              </Card>
-            </div>
-          ))}
-      </div>
+      <Card className="p-5 bg-white">
+        <div className="flex items-center gap-2 mb-5">
+          <BsFilter />
+          <Select
+            items={[
+              { label: "Completed", value: "Completed" },
+              { label: "In Progress", value: "In Progress" },
+              { label: "Scheduled", value: "Scheduled" },
+              { label: "Cancelled", value: "Cancelled" },
+            ]}
+            placeholder="Filter by status"
+            value={filter}
+            onValueChange={(value) => {
+              setFilter(value);
+            }}
+          />
+        </div>
+        <Table headings={["Session ID", "Start Time", "End Time", "More"]}>
+          {sessions
+            .filter((s) => s.session_status == filter)
+            .map((session) => {
+              return (
+                <tr
+                  key={session.session_id}
+                  className="hover:bg-gray-100 cursor-pointer"
+                  
+                >
+                  <td className="text-sm">{session.session_id}</td>
+                  <td className="text-sm">
+                    {new Date(session.start_time).toLocaleString()}
+                  </td>
+                  <td className="text-sm">
+                    {new Date(session.end_time).toLocaleString()}
+                  </td>
+                  <td className="text-sm">
+                    <Button
+                      size="xs"
+                      variant="outline"
+                      onClick={() => {
+                        router.push(`/therapist/sessions/${session.session_id}`);
+                      }}
+                    >
+                      View
+                    </Button>
+                  </td>
+                </tr>
+              );
+            })}
+        </Table>
+      </Card>
     </div>
   );
 };

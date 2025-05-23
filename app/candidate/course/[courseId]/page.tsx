@@ -26,7 +26,6 @@ const CandidateCoursePage: React.FC = () => {
           if (response?.ok) {
             const data = await response.json();
             const quizzes: Quiz[] = data.quizzes ?? [];
-            console.log("fetched courses:", quizzes);
             setQuizzesData(quizzes);
           }
         } catch (err) {
@@ -68,7 +67,8 @@ const CandidateCoursePage: React.FC = () => {
 
       {/* CandidateChapters List */}
       <div className="flex flex-col gap-4 text-sky-900">
-        {quizzesData.map((scale, id) => (
+        {quizzesData.filter(q => q.chapter_id == Number(courseId)).length === 0 && (<><p className="w-full text-center">No assessments yet!</p></>)}
+        {quizzesData.filter(q => q.chapter_id == Number(courseId)).map((scale, id) => (
           <motion.div
             key={id}
             initial={{ opacity: 0, scale: 0.95 }}
@@ -90,7 +90,7 @@ const CandidateCoursePage: React.FC = () => {
                   <p className="font-semibold text-sm md:text-lg">
                     {scale.title}
                   </p>
-                  <p className="text-xs text-sky-800">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                  <p className="text-xs text-sky-800">{scale.description}</p>
                 </div>
 
                 {/* Button Block */}

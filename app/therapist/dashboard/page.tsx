@@ -62,8 +62,11 @@ const sessionData = [
 
 const TherapistHome = () => {
   const [patients, setPatients] = useState<Record<number, Patient>>({});
-  const {metadata} = useAuthStore(s => s)
-  const name = metadata?.name ?? "";
+  const { metadata } = useAuthStore(s => s)
+  if (!metadata) {
+    return <div>Loading...</div>;
+  }
+  const { name, therapist_id } = metadata;
 
   useEffect(() => {
     const fetchPatient = async (patientId: number) => {

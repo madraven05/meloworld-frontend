@@ -6,6 +6,18 @@ export type Assessment = {
   updated_at: string;
 };
 
+export type Organization = {
+  organization_id: number;
+  organization_name: string;
+  organization_type: string;
+  contact_email: string;
+  is_approved: boolean;
+  is_enabled: boolean;
+  created_at: string;
+  updated_at: string;
+  metadata?: Record<string, any> | null;
+};
+
 export type Chapter = {
   id: number;
   course_id: number;
@@ -17,17 +29,21 @@ export type Chapter = {
 };
 
 export type Question = {
+  id: number;
   question: string;
   type: "single" | "multiple" | "likert";
   options: string[];
-  answer: string;
+  answer: string | null;
+  created_at: string;
 };
 
 export type Quiz = {
   id: number;
   chapter_id: number;
   title: string;
-  questions: Question[];
+  description: string;
+  image: string;
+  total_questions: number;
   created_at: string;
   updated_at: string;
 };
@@ -67,6 +83,21 @@ export type Patient = {
   first_name: string;
   last_name: string;
   email: string;
+};
+
+export type Session = {
+  session_id: number;
+  patient_id: number;
+  therapist_id: number;
+  content_id: number | null;
+  session_status: string;
+  start_time: string;
+  end_time: string;
+  created_at: string;
+  updated_at: string;
+  metadata: Record<string, any> | null;
+  patient_user_id: number;
+  therapist_user_id: number | null;
 };
 
 export type UserRole = "candidate" | "admin" | "org" | "therapist";

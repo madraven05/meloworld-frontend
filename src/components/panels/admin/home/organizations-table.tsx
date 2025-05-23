@@ -1,56 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Switch } from "@headlessui/react";
 import { FaArrowRight } from "react-icons/fa6";
 import Card from "@/components/ui/card/card";
 import Button from "@/components/ui/button/button";
 import Table from "@/components/ui/table/table";
 import { useRouter } from "next/navigation";
-
+import { useAdminStore } from "@/components/stores/admin-store";
 
 const OrganizationTable: React.FC = () => {
   const router = useRouter();
   const [loading] = useState(false);
-  const [organizations] = useState<Record<string, any>[]>([
-    {
-      id: 1,
-      name: "ABC Corporated",
-      candidates: 214,
-      status: "approved",
-    },
-    {
-      id: 2,
-      name: "XYZ Pvt Ltd.",
-      candidates: 172,
-      status: "approved",
-    },
-    {
-      id: 3,
-      name: "Your Health",
-      candidates: 53,
-      status: "disapproved",
-    },
-  ]);
+  const { fetchOrganizations, organizations } = useAdminStore((state) => state);
 
   //TODO: Add fetch logic
-  //   useEffect(() => {
-  //     const fetchAssessments = async () => {
-  //       if (token) {
-  //         const response = await getAllAssessments(token);
-  //         if (response.ok) {
-  //           const data = await response.json();
-  //           setTimeout(() => {
-  //             setAssessments(data["courses"]);
-  //           }, 2000);
-  //         }
-  //       }
-  //     };
-
-  //     fetchAssessments();
-
-  //     return () => {};
-  //   }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchOrganizations();
+    };
+    fetchData();
+    return () => {};
+  }, []);
 
   //   useEffect(() => {
   //     if (assessments.length > 0) {
@@ -58,15 +29,20 @@ const OrganizationTable: React.FC = () => {
   //     }
   //   }, [assessments]);
 
-  const headings = ["Name", "Candidates", "Status"];
+  const headings = ["Name", "Type", "Approve", "Status"];
 
   return (
-    <Card className="flex bg-white/60 flex-col items-start gap-5 p-5 justify-start w-full h-96">
+    <Card className="flex bg-white flex-col items-start gap-5 p-5 justify-start w-full h-96">
       <div className="flex w-full justify-between items-center">
         <h2>Organizations</h2>
-        <Button variant="outline" onClick={() => router.push("/admin/organizations")} size="xs" className="flex gap-2 items-center">
-            View More
-            <FaArrowRight/>
+        <Button
+          variant="outline"
+          onClick={() => router.push("/admin/organizations")}
+          size="xs"
+          className="flex gap-2 items-center"
+        >
+          View More
+          <FaArrowRight />
         </Button>
       </div>
       <Table headings={headings}>
@@ -86,11 +62,23 @@ const OrganizationTable: React.FC = () => {
             ))
           : organizations.map((row, rowIdx) => (
               <tr key={rowIdx}>
-                <td>{row["name"]}</td>
-                <td>{row["candidates"]}</td>
+                <td>{row["organization_name"]}</td>
+                <td>{row["organization_type"]}</td>
                 <td>
                   <Switch
-                    checked={row["status"] == "approved"}
+                    checked={row["is_approved"]}
+                    onChange={() => {}}
+                    className="group flex h-7 w-14 cursor-pointer rounded-full bg-secondary p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-primary/60"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none inline-block size-5 translate-x-0 rounded-full bg-sky-900 ring-0 shadow-lg transition duration-200 ease-in-out group-data-[checked]:translate-x-7"
+                    />
+                  </Switch>
+                </td>
+                <td>
+                  <Switch
+                    checked={row["is_enabled"]}
                     onChange={() => {}}
                     className="group flex h-7 w-14 cursor-pointer rounded-full bg-secondary p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-primary/60"
                   >
